@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{72CEED21-AD36-4E0C-886C-8DA80EA5D785}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NicksPowerTool</RootNamespace>
+    <AssemblyName>NicksPowerTool</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\..\..\..\Program Files\Nicks Power Tools\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>true</RegisterForComInterop>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="XamlBuildTask" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CCOMStreamWrapper.cs" />
+    <Compile Include="DebugWin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DebugWin.Designer.cs">
+      <DependentUpon>DebugWin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoadNPT.cs" />
+    <Compile Include="BinaryNode.cs" />
+    <Compile Include="ONReader\HierarchyNode.cs" />
+    <Compile Include="ONReader\HighlightCollection.cs" />
+    <Compile Include="ONReader\NodeHandler.cs" />
+    <Compile Include="ONReader\PageNodes\ImageNode.cs" />
+    <Compile Include="ONReader\PageNodes\InkDrawing.cs" />
+    <Compile Include="ONReader\PageNodes\InkWord.cs" />
+    <Compile Include="ONReader\PageNodes\OEChildrenNode.cs" />
+    <Compile Include="ONReader\PageNodes\OENode.cs" />
+    <Compile Include="ONReader\PageNodes\ONTag.cs" />
+    <Compile Include="ONReader\HierarchyNodes\Notebook.cs" />
+    <Compile Include="ONReader\ONNode.cs" />
+    <Compile Include="Debugg.cs" />
+    <Compile Include="ISFDecoder.cs" />
+    <Compile Include="ONReader\PageNodes\Outline.cs" />
+    <Compile Include="ONReader\HierarchyNodes\Page.cs" />
+    <Compile Include="ONReader\PageNode.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\CallbackIDProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\GenericProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\ListProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\PositionProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\ShapeInfoProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\SizeProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\TagProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\TProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageSettings.cs" />
+    <Compile Include="ONReader\PageNodes\PageTitle.cs" />
+    <Compile Include="ONReader\HierarchyNodes\Section.cs" />
+    <Compile Include="ONReader\HierarchyNodes\SectionGroup.cs" />
+    <Compile Include="ONReader\PageNodes\Shape.cs" />
+    <Compile Include="ONReader\PageNodes\TagDef.cs" />
+    <Compile Include="ONReader\PageScanner.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\HelloWorld.png" />
+    <Content Include="Properties\SamplePage.xml" />
+    <Content Include="Resources\ribbon.xml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DebugWin.resx">
+      <DependentUpon>DebugWin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.OneNote">
+      <Guid>{0EA692EE-BB50-4E3C-AEF0-356D91732725}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="MSINKAUTLib">
+      <Guid>{7D868ACD-1A5D-4A47-A247-F39741353012}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

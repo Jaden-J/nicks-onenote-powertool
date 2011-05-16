@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NicksPowerTools", "HelloWorld\NicksPowerTools.csproj", "{72CEED21-AD36-4E0C-886C-8DA80EA5D785}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "NPT Setup", "NPT Setup\NPT Setup.vdproj", "{45B2804C-EA9C-4739-8C0B-303B607E22D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLTest", "TestProject1\XMLTest.csproj", "{96B9AC09-1AB5-49A1-8DC9-896B6DA8AC21}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{633BFFBB-2093-4505-AE60-F0F8831D9F82}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		Nick's OneNote Powertool.vsmdi = Nick's OneNote Powertool.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Nick's OneNote Powertool.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72CEED21-AD36-4E0C-886C-8DA80EA5D785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72CEED21-AD36-4E0C-886C-8DA80EA5D785}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72CEED21-AD36-4E0C-886C-8DA80EA5D785}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{72CEED21-AD36-4E0C-886C-8DA80EA5D785}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{72CEED21-AD36-4E0C-886C-8DA80EA5D785}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{72CEED21-AD36-4E0C-886C-8DA80EA5D785}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72CEED21-AD36-4E0C-886C-8DA80EA5D785}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72CEED21-AD36-4E0C-886C-8DA80EA5D785}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{72CEED21-AD36-4E0C-886C-8DA80EA5D785}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{72CEED21-AD36-4E0C-886C-8DA80EA5D785}.Release|x86.ActiveCfg = Release|Any CPU
+		{45B2804C-EA9C-4739-8C0B-303B607E22D7}.Debug|Any CPU.ActiveCfg = Debug
+		{45B2804C-EA9C-4739-8C0B-303B607E22D7}.Debug|Mixed Platforms.ActiveCfg = Release
+		{45B2804C-EA9C-4739-8C0B-303B607E22D7}.Debug|x86.ActiveCfg = Debug
+		{45B2804C-EA9C-4739-8C0B-303B607E22D7}.Release|Any CPU.ActiveCfg = Release
+		{45B2804C-EA9C-4739-8C0B-303B607E22D7}.Release|Mixed Platforms.ActiveCfg = Release
+		{45B2804C-EA9C-4739-8C0B-303B607E22D7}.Release|x86.ActiveCfg = Release
+		{96B9AC09-1AB5-49A1-8DC9-896B6DA8AC21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96B9AC09-1AB5-49A1-8DC9-896B6DA8AC21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96B9AC09-1AB5-49A1-8DC9-896B6DA8AC21}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{96B9AC09-1AB5-49A1-8DC9-896B6DA8AC21}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{96B9AC09-1AB5-49A1-8DC9-896B6DA8AC21}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{96B9AC09-1AB5-49A1-8DC9-896B6DA8AC21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96B9AC09-1AB5-49A1-8DC9-896B6DA8AC21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96B9AC09-1AB5-49A1-8DC9-896B6DA8AC21}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{96B9AC09-1AB5-49A1-8DC9-896B6DA8AC21}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{96B9AC09-1AB5-49A1-8DC9-896B6DA8AC21}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
