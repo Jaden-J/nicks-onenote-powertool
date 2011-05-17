@@ -5,14 +5,8 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
 {
-    class ShapeInfoProperty : PageNodeProperty
+    [NodeName("ShapeInfo")]
+    class ShapeInfoProperty : PageProperty
     {
-        public override String NodeName
-        {
-            get
-            {
-                return "ShapeInfo";
-            }
-        }
     }
 }

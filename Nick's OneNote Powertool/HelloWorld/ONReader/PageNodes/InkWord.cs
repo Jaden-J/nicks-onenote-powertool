@@ -5,14 +5,8 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader.PageNodes
 {
-    class InkWord : PageNode
+    [NodeName("InkWord")]
+    class InkWord : PageElement
     {
-        public override String NodeName
-        {
-            get
-            {
-                return "InkWord";
-            }
-        }
     }
 }

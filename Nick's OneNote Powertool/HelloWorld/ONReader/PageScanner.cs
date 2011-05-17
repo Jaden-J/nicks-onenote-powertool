@@ -38,12 +38,18 @@ namespace NicksPowerTool.ONReader
             bool elevated = false;
             do
             {
-                if (node.NodeType != XmlNodeType.CDATA)
+                if (node.NodeType != XmlNodeType.CDATA && PageNodeFactory.isElement(node))
                 {
                     handleNode(node);
                 }
+                else if (!PageNodeFactory.isElement(node) && !PageNodeFactory.isElement(node))
+                {
+                    System.Console.WriteLine("NOT PROPERTY OR ELEMENT: " + node.Name);
+                }
 
+                iterateNode(node, out node, levels, out levels, elevated, out elevated);
                 //move through the document
+                /*
                 if (node.HasChildNodes && !elevated)
                 {
                     node = node.FirstChild;
@@ -59,15 +65,40 @@ namespace NicksPowerTool.ONReader
                     node = node.ParentNode;
                     levels--;
                     elevated = true;
-                }
+                }*/
             } while (node != null);
         }
 
-        public void handleNode(XmlNode node)
+        public void iterateNode(XmlNode nodein, out XmlNode nodeout, int levelin, out int levelout, bool elevatedin, out bool elevatedout)
         {
+            //move through the document
+            if (nodein.HasChildNodes && !elevatedin)
+            {
+                nodeout = nodein.FirstChild;
+                levelout = ++levelin;
+                elevatedout = false;
+            }
+            else if (nodein.NextSibling != null)
+            {
+                nodeout = nodein.NextSibling;
+                levelout = levelin;
+                elevatedout = false;
+            }
+            else
+            {
+                nodeout = nodein.ParentNode;
+                levelout = --levelin;
+                elevatedout = true;
+            }
         }
 
-        public void processChildren(XmlNode node)
+        public void handleNode(XmlNode xmlnode)
+        {
+            *PageElement pagenode = PageNodeFactory.GenerateNode(xmlnode);
+            processChildren(pagenode);
+        }
+
+        public void processChildren(PageElement node)
         {
         }
 

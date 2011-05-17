@@ -5,14 +5,8 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
 {
-    class CallbackIDProperty : PageNodeProperty
+    [NodeName("CallbackID")]
+    class CallbackIDProperty : PageProperty
     {
-        public override String NodeName
-        {
-            get
-            {
-                return "CallbackID";
-            }
-        }
     }
 }

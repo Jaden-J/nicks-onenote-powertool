@@ -5,14 +5,8 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader.PageNodes
 {
-    class OENode : PageNode
+    [NodeName("OE")]
+    class OENode : PageElement
     {
-        public override String NodeName
-        {
-            get
-            {
-                return "OE";
-            }
-        }
     }
 }

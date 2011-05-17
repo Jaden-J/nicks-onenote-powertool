@@ -5,11 +5,8 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader.HierarchyNodes
 {
+    [NodeName("Notebooks")]
     class Notebooks : HierarchyNode
     {
-        public override string NodeName
-        {
-            get { return "Notebooks"; }
-        }
     }
 }

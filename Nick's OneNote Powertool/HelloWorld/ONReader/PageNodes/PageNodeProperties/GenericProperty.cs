@@ -5,10 +5,11 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
 {
-    class GenericProperty : PageNodeProperty
+    [NodeName("GENERIC")]
+    class GenericProperty : PageProperty
     {
         private String GenericNodeName;
-        public override String NodeName { get { return GenericNodeName;}}
+        public String NodeName { get { return GenericNodeName;}}
 
         public GenericProperty(String nodeName)
         {

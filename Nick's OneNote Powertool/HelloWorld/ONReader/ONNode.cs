@@ -14,6 +14,15 @@ namespace NicksPowerTool
         public XmlNode Node { get; set; }
         public ONNode ParentNode { get; set; }
         public bool Changed { get; set; }
-        public abstract String NodeName { get; }
+
+        public ONNode()
+        {
+        }
+
+        public T finishConstruction<T>(XmlNode node) where T : ONNode
+        {
+            this.Node = node;
+            return (T)this;
+        }
     }
 }

@@ -5,14 +5,8 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader.PageNodes
 {
-    class TagDef : PageNode
+    [NodeName("TagDef")]
+    class TagDef : PageElement
     {
-        public override String NodeName
-        {
-            get
-            {
-                return "TagDef";
-            }
-        }
     }
 }

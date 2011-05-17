@@ -6,14 +6,8 @@ using System.Xml;
 
 namespace NicksPowerTool.ONReader.PageNodes
 {
-    class Outline : PageNode
+    [NodeName("Outline")]
+    class Outline : PageElement
     {
-        public override String NodeName
-        {
-            get
-            {
-                return "Outline";
-            }
-        }
     }
 }

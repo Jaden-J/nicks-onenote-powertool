@@ -6,17 +6,10 @@ using System.Xml;
 
 namespace NicksPowerTool.ONReader.HiearchyNodes
 {
-    
+    [NodeName("Page")]
     public class ONPage : HierarchyNode
     {
         public String pageXml;
-        public override String NodeName
-        {
-            get
-            {
-                return "Page";
-            }
-        }
         public ONPage(String pageXml)
         {
             this.pageXml = pageXml;

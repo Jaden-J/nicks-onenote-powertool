@@ -5,8 +5,7 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader
 {
-    public abstract class PageNode : ONNode
+    public abstract class PageProperty : PageElement
     {
-        
     }
 }

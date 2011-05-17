@@ -5,14 +5,8 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
 {
-    class ListProperty : PageNodeProperty
+    [NodeName("List")]
+    class ListProperty : PageProperty
     {
-        public override String NodeName
-        {
-            get
-            {
-                return "List";
-            }
-        }
     }
 }
