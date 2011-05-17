@@ -11,7 +11,7 @@ namespace NicksPowerTool.ONReader
 {
     public class PageScanner
     {
-        private Page page;
+        private ONPage page;
         private List<NodeHandler> handlers = new List<NodeHandler>();
         private List<ONNode> nodes = new List<ONNode>();
 
@@ -20,7 +20,7 @@ namespace NicksPowerTool.ONReader
         private XmlReader reader;
         private XmlDocument doc = new XmlDocument();
 
-        public PageScanner(Page page)
+        public PageScanner(ONPage page)
         {
             this.page = page;
 

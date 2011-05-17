@@ -8,10 +8,12 @@ namespace NicksPowerTool.ONReader.PageNodes
 {
     class PageSettings : PageNode
     {
-        XmlNode node;
-        public PageSettings(XmlNode node)
+        public String NodeName
         {
-            this.node = node;
+            get
+            {
+                return "PageSettings";
+            }
         }
     }
 }

@@ -6,7 +6,13 @@ using System.Xml;
 
 namespace NicksPowerTool.ONReader
 {
-    public abstract class HierarchyNode : ONNode
+    
+    class PageNodeFactory
     {
+        public static PageNode GenerateNode(XmlNode node)
+        {
+            return null;
+        }
+
     }
 }

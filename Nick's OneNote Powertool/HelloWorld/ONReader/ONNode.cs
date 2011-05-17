@@ -8,16 +8,12 @@ using System.Xml.Serialization;
 
 namespace NicksPowerTool
 {
-    class ONNode
+
+    public abstract class ONNode
     {
         public XmlNode Node { get; set; }
         public ONNode ParentNode { get; set; }
         public bool Changed { get; set; }
-
-        public ONNode(XmlNode node, ONNode parentNode)
-        {
-            this.Node = node;
-            this.ParentNode = parentNode;
-        }
+        public abstract String NodeName { get; }
     }
 }

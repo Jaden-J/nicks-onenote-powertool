@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Xml;
+using NicksPowerTool.ONReader.HiearchyNodes;
 
 namespace XmLTest
 {
@@ -74,7 +75,7 @@ namespace XmLTest
         public void scanTest()
         {
             String xml = System.IO.File.ReadAllText(sampleFilePath);
-            Page page = new Page(xml); // TODO: Initialize to an appropriate value
+            ONPage page = new ONPage(xml); // TODO: Initialize to an appropriate value
             PageScanner target = new PageScanner(page); // TODO: Initialize to an appropriate value
             target.scan();
             Assert.IsTrue(true);

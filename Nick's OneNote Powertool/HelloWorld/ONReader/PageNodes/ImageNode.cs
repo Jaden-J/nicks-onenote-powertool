@@ -7,5 +7,12 @@ namespace NicksPowerTool.ONReader.PageNodes
 {
     class ImageNode : PageNode
     {
+        public String NodeName
+        {
+            get
+            {
+                return "Image";
+            }
+        }
     }
 }

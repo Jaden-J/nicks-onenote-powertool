@@ -68,6 +68,7 @@
     <Compile Include="ONReader\HighlightCollection.cs" />
     <Compile Include="ONReader\NodeHandler.cs" />
     <Compile Include="ONReader\PageNode.cs" />
+    <Compile Include="ONReader\PageNodeFactory.cs" />
     <Compile Include="ONReader\PageNodeProperty.cs" />
     <Compile Include="ONReader\PageNodes\ImageNode.cs" />
     <Compile Include="ONReader\PageNodes\InkDrawing.cs" />
@@ -79,7 +80,7 @@
     <Compile Include="Debugg.cs" />
     <Compile Include="ISFDecoder.cs" />
     <Compile Include="ONReader\PageNodes\Outline.cs" />
-    <Compile Include="ONReader\HierarchyNodes\Page.cs" />
+    <Compile Include="ONReader\HierarchyNodes\ONPage.cs" />
     <Compile Include="ONReader\PageNodes\PageNodeProperties\CallbackIDProperty.cs" />
     <Compile Include="ONReader\PageNodes\PageNodeProperties\GenericProperty.cs" />
     <Compile Include="ONReader\PageNodes\PageNodeProperties\ListProperty.cs" />

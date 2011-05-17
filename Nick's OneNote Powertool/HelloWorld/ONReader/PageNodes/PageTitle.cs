@@ -7,5 +7,12 @@ namespace NicksPowerTool.ONReader.PageNodes
 {
     class PageTitle : PageNode
     {
+        public String NodeName
+        {
+            get
+            {
+                return "Title";
+            }
+        }
     }
 }

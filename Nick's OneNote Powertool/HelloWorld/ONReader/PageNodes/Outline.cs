@@ -8,10 +8,12 @@ namespace NicksPowerTool.ONReader.PageNodes
 {
     class Outline : PageNode
     {
-        public String Author;
-        public String LastModifiedBy;
-        public DateTime LastModifiedTime;
-
-        
+        public String NodeName
+        {
+            get
+            {
+                return "Outline";
+            }
+        }
     }
 }

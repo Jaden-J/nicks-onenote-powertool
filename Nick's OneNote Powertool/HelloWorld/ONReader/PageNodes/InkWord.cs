@@ -7,5 +7,12 @@ namespace NicksPowerTool.ONReader.PageNodes
 {
     class InkWord : PageNode
     {
+        public String NodeName
+        {
+            get
+            {
+                return "InkWord";
+            }
+        }
     }
 }

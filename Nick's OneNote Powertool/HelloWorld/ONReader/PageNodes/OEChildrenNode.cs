@@ -7,5 +7,12 @@ namespace NicksPowerTool.ONReader.PageNodes
 {
     class OEChildrenNode : PageNode
     {
+        public String NodeName
+        {
+            get
+            {
+                return "OEChildren";
+            }
+        }
     }
 }
