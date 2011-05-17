@@ -5,14 +5,11 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader.HierarchyNodes
 {
-    class SectionGroup : HierarchyNode
+    class Notebooks : HierarchyNode
     {
-        public override String NodeName
+        public override string NodeName
         {
-            get
-            {
-                return "Folder";
-            }
+            get { return "Notebooks"; }
         }
     }
 }

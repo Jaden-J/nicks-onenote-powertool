@@ -7,5 +7,12 @@ namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
 {
     class CallbackIDProperty : PageNodeProperty
     {
+        public override String NodeName
+        {
+            get
+            {
+                return "CallbackID";
+            }
+        }
     }
 }

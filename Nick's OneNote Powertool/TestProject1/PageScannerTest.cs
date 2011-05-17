@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Xml;
 using NicksPowerTool.ONReader.HiearchyNodes;
+using Microsoft.Office.Interop.OneNote;
 
 namespace XmLTest
 {
@@ -141,6 +142,19 @@ namespace XmLTest
                     elevated = true;
                 }
             } while (node != null);
+            Assert.IsTrue(true);
+        }
+        
+        [TestMethod()]
+        public void testAppInterface()
+        {
+            Microsoft.Office.Interop.OneNote.Application app = new Microsoft.Office.Interop.OneNote.ApplicationClass();
+            String strXML;
+            app.GetHierarchy(null, HierarchyScope.hsPages, out strXML);
+
+            StreamWriter sw = new StreamWriter("C:\\Hierarchy.xml");
+            sw.Write(strXML);
+            sw.Close();
             Assert.IsTrue(true);
         }
     }

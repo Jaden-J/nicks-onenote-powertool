@@ -7,5 +7,12 @@ namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
 {
     class TProperty : PageNodeProperty
     {
+        public override String NodeName
+        {
+            get
+            {
+                return "T";
+            }
+        }
     }
 }

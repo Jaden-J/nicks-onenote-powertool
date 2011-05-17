@@ -7,7 +7,7 @@ namespace NicksPowerTool.ONReader.PageNodes
 {
     class InkDrawing : PageNode
     {
-        public String NodeName {
+        public override String NodeName {
             get {
                 return "InkDrawing";
             }

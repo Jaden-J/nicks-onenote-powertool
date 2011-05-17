@@ -65,6 +65,7 @@
     <Compile Include="LoadNPT.cs" />
     <Compile Include="BinaryNode.cs" />
     <Compile Include="ONReader\HierarchyNode.cs" />
+    <Compile Include="ONReader\HierarchyNodes\Notebooks.cs" />
     <Compile Include="ONReader\HighlightCollection.cs" />
     <Compile Include="ONReader\NodeHandler.cs" />
     <Compile Include="ONReader\PageNode.cs" />
@@ -93,7 +94,6 @@
     <Compile Include="ONReader\PageNodes\PageTitle.cs" />
     <Compile Include="ONReader\HierarchyNodes\Section.cs" />
     <Compile Include="ONReader\HierarchyNodes\SectionGroup.cs" />
-    <Compile Include="ONReader\PageNodes\Shape.cs" />
     <Compile Include="ONReader\PageNodes\TagDef.cs" />
     <Compile Include="ONReader\PageScanner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

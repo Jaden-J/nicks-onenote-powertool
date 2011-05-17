@@ -8,7 +8,7 @@ namespace NicksPowerTool.ONReader.PageNodes
 {
     class Outline : PageNode
     {
-        public String NodeName
+        public override String NodeName
         {
             get
             {
