@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader
 {
-    class HierarchyNode
+    class HierarchyNode : ONNode
     {
     }
 }
