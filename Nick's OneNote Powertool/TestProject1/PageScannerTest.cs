@@ -1,4 +1,5 @@
 ﻿using NicksPowerTool.ONReader;
+using NicksPowerTool;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
@@ -148,12 +149,10 @@ namespace XmLTest
         [TestMethod()]
         public void testAppInterface()
         {
-            Microsoft.Office.Interop.OneNote.Application app = new Microsoft.Office.Interop.OneNote.ApplicationClass();
-            String strXML;
-            app.GetHierarchy(null, HierarchyScope.hsPages, out strXML);
+            String xmlOut = new Debugg().getHierarchy();
 
             StreamWriter sw = new StreamWriter("C:\\Hierarchy.xml");
-            sw.Write(strXML);
+            sw.Write(xmlOut);
             sw.Close();
             Assert.IsTrue(true);
         }

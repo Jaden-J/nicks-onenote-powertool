@@ -27,7 +27,7 @@ namespace NicksPowerTool.ONReader
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.IgnoreComments = true;
             settings.IgnoreWhitespace = true;
-            reader = XmlReader.Create(new MemoryStream(Encoding.ASCII.GetBytes(page.pageXml)), settings);
+            reader = XmlReader.Create(new StringReader(page.pageXml), settings);
             doc.Load(reader);
         }
 

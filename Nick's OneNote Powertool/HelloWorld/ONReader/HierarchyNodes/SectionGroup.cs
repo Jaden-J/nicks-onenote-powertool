@@ -11,7 +11,7 @@ namespace NicksPowerTool.ONReader.HierarchyNodes
         {
             get
             {
-                return "Folder";
+                return "SectionGroup";
             }
         }
     }
