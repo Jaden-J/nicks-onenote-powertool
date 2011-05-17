@@ -76,7 +76,8 @@ namespace NicksPowerTool.ONReader
 
         public bool isRecordedNode(XmlNode node)
         {
-            ((object)node).GetType().
+            //((object)node).GetType().
+            return true;
         }
 
         private String NAME_OECHILDREN = "one:OECHildren";

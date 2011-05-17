@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace NicksPowerTool.ONReader
+namespace NicksPowerTool.ONReader.HiearchyNodes
 {
     
-    public class Page
+    public class Page : HierarchyNode
     {
         public String pageXml;
         public Page(String pageXml)

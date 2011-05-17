@@ -67,12 +67,12 @@
     <Compile Include="ONReader\HierarchyNode.cs" />
     <Compile Include="ONReader\HighlightCollection.cs" />
     <Compile Include="ONReader\NodeHandler.cs" />
+    <Compile Include="ONReader\PageNodeProperty.cs" />
     <Compile Include="ONReader\PageNodes\ImageNode.cs" />
     <Compile Include="ONReader\PageNodes\InkDrawing.cs" />
     <Compile Include="ONReader\PageNodes\InkWord.cs" />
     <Compile Include="ONReader\PageNodes\OEChildrenNode.cs" />
     <Compile Include="ONReader\PageNodes\OENode.cs" />
-    <Compile Include="ONReader\PageNodes\ONTag.cs" />
     <Compile Include="ONReader\HierarchyNodes\Notebook.cs" />
     <Compile Include="ONReader\ONNode.cs" />
     <Compile Include="Debugg.cs" />
@@ -111,6 +111,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

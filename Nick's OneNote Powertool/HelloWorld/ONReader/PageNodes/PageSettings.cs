@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace NicksPowerTool.ONReader.Nodes
+namespace NicksPowerTool.ONReader.PageNodes
 {
-    class PageSettings
+    class PageSettings : PageNode
     {
         XmlNode node;
         public PageSettings(XmlNode node)

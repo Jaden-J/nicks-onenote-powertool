@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
 {
-    class SizeProperty
+    class SizeProperty : PageNodeProperty
     {
     }
 }

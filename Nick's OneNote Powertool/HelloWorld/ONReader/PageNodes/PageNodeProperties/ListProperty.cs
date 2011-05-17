@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
 {
-    class ListProperty
+    class ListProperty : PageNodeProperty
     {
     }
 }

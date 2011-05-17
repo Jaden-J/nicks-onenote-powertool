@@ -4,16 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace NicksPowerTool
+namespace NicksPowerTool.ONReader.PageNodes
 {
-    class Outline : ONNode
+    class Outline : PageNode
     {
         public String Author;
         public String LastModifiedBy;
         public DateTime LastModifiedTime;
 
-        public Outline(XmlNode node, ONNode parentNode) : base(node, parentNode)
-        {
-        }
+        
     }
 }
