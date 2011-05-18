@@ -96,7 +96,13 @@ namespace NicksPowerTool.ONReader
 
         public PageNode handleNode(XmlNode xmlnode)
         {
-            PageNode pagenode = PageNodeFactory.GenerateNode(xmlnode);
+            PageNode pagenode = PageNodeFactory.GenerateNode(xmlnode, Context.Page);
+
+            if (pagenode is ONPage)
+            {
+                Context.Page = (ONPage)pagenode;
+            }
+
             if (pagenode is PageElement)
             {
                 PageElement element = (PageElement)pagenode;
@@ -106,7 +112,7 @@ namespace NicksPowerTool.ONReader
                 if (Context.NodeStack.Peek() is PageElement)
                 {
                     ((PageElement)Context.NodeStack.Peek()).
-                        addChildElement(element);
+                        AddChildNode(element);
                 }
             }
 
@@ -116,7 +122,7 @@ namespace NicksPowerTool.ONReader
                 collectedProperties.Add(property);
                 collectedPageNodes.Add(property);
 
-                Context.NodeStack.Peek().AddProperty(property);
+                Context.NodeStack.Peek().AddChildNode(property);
             }
 
             else
@@ -124,7 +130,7 @@ namespace NicksPowerTool.ONReader
                 collectedOther.Add((GenericPageNode)pagenode);
                 collectedPageNodes.Add(pagenode);
                 if(Context.NodeStack.Count >0)
-                    Context.NodeStack.Peek().AddUndefinedSubNode(pagenode);
+                    Context.NodeStack.Peek().AddChildNode(pagenode);
             }
             
             return pagenode;

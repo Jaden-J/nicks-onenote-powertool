@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader.PageNodes.PageNodeAugmentation.Interfaces
 {
-    interface IHasBinaryData
+    public interface IHasBinaryData
     {
     }
 }

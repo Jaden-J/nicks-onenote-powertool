@@ -92,6 +92,17 @@ namespace NicksPowerTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
+        ///&lt;one:Page xmlns:one=&quot;http://schemas.microsoft.com/office/onenote/2010/onenote&quot; ID=&quot;{F5E963D1-09B3-4FB4-889B-28D5935BDE84}{1}{B0}&quot; name=&quot;PrintedPageTable&quot; dateTime=&quot;2011-05-18T14:49:35.000Z&quot; lastModifiedTime=&quot;2011-05-18T15:31:20.000Z&quot; pageLevel=&quot;1&quot; isCurrentlyViewed=&quot;true&quot; selected=&quot;partial&quot; lang=&quot;en-US&quot;&gt;
+        ///  &lt;one:QuickStyleDef index=&quot;0&quot; name=&quot;PageTitle&quot; fontColor=&quot;automatic&quot; highlightColor=&quot;automatic&quot; font=&quot;Calibri&quot; fontSize=&quot;17.0&quot; spaceBefore=&quot;0.0&quot; spaceAfter=&quot;0.0&quot; / [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PageWithBinary {
+            get {
+                return ResourceManager.GetString("PageWithBinary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;customUI xmlns=&quot;http://schemas.microsoft.com/office/2006/01/customui&quot; loadImage=&quot;GetImage&quot;&gt;
         ///	&lt;ribbon&gt;
@@ -112,8 +123,10 @@ namespace NicksPowerTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt; 
-        ///.
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
+        ///&lt;one:Page xmlns:one=&quot;http://schemas.microsoft.com/office/onenote/2010/onenote&quot; ID=&quot;{16FAC369-8F5C-4A04-80F1-644750FA6952}{1}{B0}&quot; name=&quot;PrintedPage&quot; dateTime=&quot;2011-05-18T12:17:23.000Z&quot; lastModifiedTime=&quot;2011-05-18T12:17:30.000Z&quot; pageLevel=&quot;1&quot; isCurrentlyViewed=&quot;true&quot; selected=&quot;partial&quot;&gt;
+        ///  &lt;one:QuickStyleDef index=&quot;0&quot; name=&quot;PageTitle&quot; fontColor=&quot;automatic&quot; highlightColor=&quot;automatic&quot; font=&quot;Calibri&quot; fontSize=&quot;17.0&quot; spaceBefore=&quot;0.0&quot; spaceAfter=&quot;0.0&quot; /&gt;
+        ///  &lt;one:XPSFile  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SelectedSlide {
             get {

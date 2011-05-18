@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections;
 using System.ComponentModel;
 using System.Xml;
+using NicksPowerTool.ONReader.PageNodes;
 
 
 namespace NicksPowerTool.ONReader
@@ -18,6 +19,7 @@ namespace NicksPowerTool.ONReader
         private bool _elevated;
         private XmlNode _node;
         private PageNode _lastGeneratedNode;
+        private ONPage _Page = null;
         #endregion
         public PageScanner PageScanner
         {
@@ -29,6 +31,12 @@ namespace NicksPowerTool.ONReader
         {
             get { return _nodeStack; }
             set { _nodeStack = value; }
+        }
+
+        public ONPage Page
+        {
+            get { return _Page; }
+            set { _Page = value; }
         }
 
         public enum StateType {NOT_READY, READY, SCANNING, DONE}

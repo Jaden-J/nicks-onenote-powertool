@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Xml;
+using System.Reflection;
+using NicksPowerTool.ONReader.PageNodes;
 
 namespace NicksPowerTool.ONReader
 {
@@ -16,11 +18,20 @@ namespace NicksPowerTool.ONReader
             get
             {
                 //CHEATING!!!!
-                Object o = (object)_PageNodes.FindAll(match => match.GetType().Equals(typeof(PageProperty)));
+                Object o = (object)ChildPageNodes.FindAll(match => match.GetType().Equals(typeof(PageProperty)));
                 return (List<PageProperty>)o;
             }
         }
-        public List<PageNode> PageNodes
+
+        public String NodeName
+        {
+            get
+            {
+                return ((NodeName)this.GetType().GetCustomAttributes(typeof(NodeName), false).First()).Name;
+            }
+        }
+
+        public List<PageNode> ChildPageNodes
         {
             get
             {
@@ -32,24 +43,43 @@ namespace NicksPowerTool.ONReader
         {
             get
             {
-                return PageNodes.FindAll(match => !match.GetType().Equals(typeof(PageProperty)) && !match.GetType().Equals(typeof(PageElement)));
+                return ChildPageNodes.FindAll(match => !match.GetType().Equals(typeof(PageProperty)) && !match.GetType().Equals(typeof(PageElement)));
             }
         }
 
-
         public enum SelectedValue { NOT_SELECTED, PARTIAL, ALL }
 
-        [DefaultValue(SelectedValue.NOT_SELECTED)]
         public SelectedValue Selected
         {
             get
             {
-                return SelectedValue.NOT_SELECTED;
+                switch (Attributes.GetAttributeValueString("selected")) {
+                    case "partial":
+                        return SelectedValue.PARTIAL;
+                    case "all":
+                        return SelectedValue.ALL;
+                    default:
+                        return SelectedValue.NOT_SELECTED;
+                }
+            }
+        }
+        private ONPage _OwnerPage;
+        public ONPage OwnerPage
+        {
+            get
+            {
+                return _OwnerPage;
             }
         }
 
-        public void AddProperty(PageProperty property) {
-            PageNodes.Add(property);
+        public void AddChildNode(PageNode node) {
+            ChildPageNodes.Add(node);
+        }
+
+        public T finishConstruction<T>(XmlNode node, ONPage page) where T : PageNode
+        {
+            _OwnerPage = page;
+            return finishConstruction<T>(node);
         }
     }
 }

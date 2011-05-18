@@ -33,7 +33,7 @@ namespace NicksPowerTool.ONReader
             }
         }
 
-        public static PageNode GenerateNode(XmlNode node)
+        public static PageNode GenerateNode(XmlNode node, ONPage page)
         {
             if (node == null) {
                 return null;
@@ -47,7 +47,7 @@ namespace NicksPowerTool.ONReader
                 if (PageElements.TryGetValue(node.LocalName, out elementType))
                 {
                     ConstructorInfo c = elementType.GetConstructor(types);
-                    return ((PageElement)c.Invoke(objects)).finishConstruction<PageElement>(node);
+                    return ((PageElement)c.Invoke(objects)).finishConstruction<PageElement>(node, page);
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace NicksPowerTool.ONReader
                 if (PageProperties.TryGetValue(node.LocalName, out elementType))
                 {
                     ConstructorInfo c = elementType.GetConstructor(types);
-                    return ((PageProperty)c.Invoke(objects)).finishConstruction<PageProperty>(node);
+                    return ((PageProperty)c.Invoke(objects)).finishConstruction<PageProperty>(node, page);
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace NicksPowerTool.ONReader
             }
             else
             {
-                return new GenericPageNode().finishConstruction<GenericPageNode>(node);
+                return new GenericPageNode().finishConstruction<GenericPageNode>(node, page);
             }
         }
 

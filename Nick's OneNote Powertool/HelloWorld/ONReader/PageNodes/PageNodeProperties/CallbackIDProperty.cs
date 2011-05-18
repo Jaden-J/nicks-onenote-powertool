@@ -8,5 +8,12 @@ namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
     [NodeName("CallbackID")]
     class CallbackIDProperty : PageProperty
     {
+        public String CallbackIDValue
+        {
+            get
+            {
+                return Attributes.GetAttributeValueString("callbackID");
+            }
+        }
     }
 }

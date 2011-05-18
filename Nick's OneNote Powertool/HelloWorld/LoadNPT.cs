@@ -13,6 +13,7 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Xaml;
 using System.Threading;
+using System.Collections;
 
 //61139959-A5E4-4261-977A-6262429033EB
 namespace NicksPowerTool
@@ -171,6 +172,19 @@ namespace NicksPowerTool
             String handleHex = handle.ToString("X");
             String lhandleHex = lhandle.ToString("X");
             String other = "hi";
+        }
+
+        public static Window getActiveWindow()
+        {
+            Window result = null;
+            foreach (Window w in onApp.Windows)
+            {
+                if (w.Active)
+                {
+                    result = w;
+                }
+            }
+            return result;
         }
 	}
 }
