@@ -24,11 +24,12 @@ namespace NicksPowerTool
 
 		ApplicationClass onApp = new ApplicationClass();
         String pageId;
+        bool debugging = false;
 
         public LoadNPT()
         {
             String text = "LoadNPT created";
-            MessageBox.Show(text);
+            if (debugging) MessageBox.Show(text);
         }
 
 		public void OnConnection(object Application, ext_ConnectMode ConnectMode, object AddInInst, ref Array custom)
@@ -36,7 +37,7 @@ namespace NicksPowerTool
 			/*
 				For debugging, it is useful to have a MessageBox.Show() here, so that execution is paused while you have a chance to get VS to 'Attach to Process' 
 			*/
-            MessageBox.Show("Starting the plugin");
+            //if (debugging) MessageBox.Show("Starting the plugin");
             onApp = (ApplicationClass)Application;
 		}
 		public void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref System.Array custom)
@@ -92,7 +93,7 @@ namespace NicksPowerTool
         
         public void OnDialogClosed(IQuickFilingDialog dialog)
         {
-            MessageBox.Show("Time");
+            if (debugging) MessageBox.Show("Time");
             if (dialog.PressedButton >= 0)
             {
                 pageId = dialog.SelectedItem;

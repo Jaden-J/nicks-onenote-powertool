@@ -98,15 +98,13 @@ namespace XmLTest
         public void GeneratePageNodeDictionaryTest()
         {
             System.Console.WriteLine("PageNodes: ");
-
-            foreach (KeyValuePair<String, Type> kv in PageNodeFactory.PageElementDictionary)
+            foreach (KeyValuePair<String, Type> kv in PageNodeFactory.PageElements)
             {
                 System.Console.WriteLine("\tNodeName: " + kv.Key + ". Type: " + kv.Value.Name);
             }
 
             System.Console.WriteLine("PageNodeProperties: ");
-
-            foreach (KeyValuePair<String, Type> kv in PageNodeFactory.PagePropertyDictionary)
+            foreach (KeyValuePair<String, Type> kv in PageNodeFactory.PageProperties)
             {
                 System.Console.WriteLine("\tPropertyName: " + kv.Key + ". Type: " + kv.Value.Name);
             }

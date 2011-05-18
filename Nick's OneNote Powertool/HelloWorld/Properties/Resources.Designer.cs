@@ -68,6 +68,28 @@ namespace NicksPowerTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
+        ///&lt;one:Page xmlns:one=&quot;http://schemas.microsoft.com/office/onenote/2010/onenote&quot; ID=&quot;{00E65221-3F2E-41E7-86F8-34E68CB19121}{1}{B0}&quot; name=&quot;Presentation: Cerebrum: Thalamus and Cortex&quot; dateTime=&quot;2011-05-08T19:12:15.000Z&quot; lastModifiedTime=&quot;2011-05-18T02:30:46.000Z&quot; pageLevel=&quot;2&quot; isCurrentlyViewed=&quot;true&quot; lang=&quot;en-US&quot;&gt;
+        ///  &lt;one:TagDef index=&quot;0&quot; type=&quot;0&quot; symbol=&quot;82&quot; fontColor=&quot;automatic&quot; highlightColor=&quot;#FFFF00&quot; name=&quot;Important&quot; /&gt;
+        ///  &lt;one:TagDef index=&quot;1&quot; type=&quot;1&quot; symbol=&quot;59 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string LargePage {
+            get {
+                return ResourceManager.GetString("LargePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt; 
+        ///.
+        /// </summary>
+        internal static string LinkedNotes {
+            get {
+                return ResourceManager.GetString("LinkedNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;customUI xmlns=&quot;http://schemas.microsoft.com/office/2006/01/customui&quot; loadImage=&quot;GetImage&quot;&gt;
         ///	&lt;ribbon&gt;

@@ -71,7 +71,36 @@
     <Compile Include="ONReader\HighlightCollection.cs" />
     <Compile Include="ONReader\NodeHandler.cs" />
     <Compile Include="ONReader\PageElement.cs" />
+    <Compile Include="ONReader\PageNode.cs" />
     <Compile Include="ONReader\PageNodeFactory.cs" />
+    <Compile Include="ONReader\PageNodes\InkParagraph.cs" />
+    <Compile Include="ONReader\PageNodes\InsertedFileNode.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\LinkedNotes\LinkedNoteDescriptionProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\LinkedNotes\LinkedNoteFriendlyNameProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\LinkedNotes\LinkedNoteProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\LinkedNotes\LinkedNoteShortNameProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\LinkedNotes\LinkedNoteThumbnailProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\LinkedNotes\LinkedNoteUriProperty.cs" />
+    <Compile Include="ONReader\PageNodes\MediaFileNode.cs" />
+    <Compile Include="ONReader\PageNodes\MediaPlaylistNode.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\EndOfLineProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\IndentProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\IndentsProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\MediaIndexProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\MediaReferenceProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\OCRDataProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\OCRTextProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\OCRTokenProperty.cs" />
+    <Compile Include="ONReader\PageNodes\XPSFileNode.cs" />
+    <Compile Include="ONReader\PageNodes\GenericPageNode.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\AnchorPointProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\AutomaticProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\BullettProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\CDataProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\PageSizeProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\RuleLinesProperty.cs" />
+    <Compile Include="ONReader\PageNodes\PageNodeProperties\SpaceProperty.cs" />
+    <Compile Include="ONReader\PageNodes\QuickStyleDef.cs" />
     <Compile Include="ONReader\PageProperty.cs" />
     <Compile Include="ONReader\PageNodes\ImageNode.cs" />
     <Compile Include="ONReader\PageNodes\InkDrawing.cs" />
@@ -83,7 +112,7 @@
     <Compile Include="Debugg.cs" />
     <Compile Include="ISFDecoder.cs" />
     <Compile Include="ONReader\PageNodes\Outline.cs" />
-    <Compile Include="ONReader\HierarchyNodes\ONPage.cs" />
+    <Compile Include="ONReader\PageNodes\ONPage.cs" />
     <Compile Include="ONReader\PageNodes\PageNodeProperties\CallbackIDProperty.cs" />
     <Compile Include="ONReader\PageNodes\PageNodeProperties\GenericProperty.cs" />
     <Compile Include="ONReader\PageNodes\PageNodeProperties\ListProperty.cs" />
@@ -98,6 +127,7 @@
     <Compile Include="ONReader\HierarchyNodes\SectionGroup.cs" />
     <Compile Include="ONReader\PageNodes\TagDef.cs" />
     <Compile Include="ONReader\PageScanner.cs" />
+    <Compile Include="ONReader\PageScannerContext.cs" />
     <Compile Include="ONReader\PropertySubNodes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -113,6 +143,7 @@
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Ideas.txt" />
     <None Include="app.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
@@ -122,6 +153,8 @@
     </None>
     <None Include="Resources\HelloWorld.png" />
     <Content Include="Properties\SamplePage.xml" />
+    <Content Include="Resources\LargePage.xml" />
+    <Content Include="Resources\LinkedNotes.xml" />
     <Content Include="Resources\ribbon.xml">
       <SubType>Designer</SubType>
     </Content>

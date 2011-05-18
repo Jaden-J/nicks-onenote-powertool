@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Xml;
-using NicksPowerTool.ONReader.HiearchyNodes;
+using NicksPowerTool.ONReader.PageNodes;
 using Microsoft.Office.Interop.OneNote;
 
 namespace XmLTest
@@ -68,7 +68,7 @@ namespace XmLTest
         //
         #endregion
 
-        String sampleFilePath = "C:\\SmallSamplePage.xml";
+        String sampleFilePath = "C:\\SamplePage.xml";
 
         /// <summary>
         ///A test for scan
@@ -76,10 +76,33 @@ namespace XmLTest
         [TestMethod()]
         public void scanTest()
         {
-            String xml = System.IO.File.ReadAllText(sampleFilePath);
+            String xml = NicksPowerTool.Properties.Resources.LinkedNotes;
+            //String xml = System.IO.File.ReadAllText(sampleFilePath);
             ONPage page = new ONPage(xml); // TODO: Initialize to an appropriate value
             PageScanner target = new PageScanner(page); // TODO: Initialize to an appropriate value
             target.scan();
+
+            XmlNode temp;
+            /*
+            System.Console.WriteLine("Elements: ");
+            foreach (PageNode node in target.collectedPageNodes)
+            {
+                temp = node.Node;
+                while ((temp = temp.ParentNode) != null) System.Console.Write("\t");
+                System.Console.WriteLine("\tName: " + node.Node.LocalName);// + "\t\tType: " + node.Node.Value);
+            }
+            System.Console.WriteLine("");
+            */
+            System.Console.WriteLine("Other: ");
+            foreach (GenericPageNode node in target.collectedOther)
+            {
+                temp = node.Node;
+                while ((temp = temp.ParentNode) != null) System.Console.Write("\t");
+                System.Console.WriteLine("\tName: " + node.Node.LocalName);// + "\t\tType: " + node.Node.Value);
+            }
+            System.Console.WriteLine("");
+
+            
             Assert.IsTrue(true);
         }
 

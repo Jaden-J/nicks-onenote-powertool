@@ -5,6 +5,7 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader
 {
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     class NodeName : Attribute
     {
         public String Name {get; set;}

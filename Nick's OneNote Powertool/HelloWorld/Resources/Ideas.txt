@@ -1,0 +1,3 @@
+﻿Ideas:
+
+1) Click something and see what OneNote thinks it says. Maybe edit?

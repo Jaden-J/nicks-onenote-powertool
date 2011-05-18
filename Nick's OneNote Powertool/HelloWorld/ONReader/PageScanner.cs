@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.IO;
-using NicksPowerTool.ONReader.HiearchyNodes;
+using NicksPowerTool.ONReader.PageNodes;
 using System.Windows.Controls;
 
 namespace NicksPowerTool.ONReader
@@ -14,97 +14,120 @@ namespace NicksPowerTool.ONReader
         private ONPage page;
         private List<NodeHandler> handlers = new List<NodeHandler>();
         private List<ONNode> nodes = new List<ONNode>();
-
-        private List<XmlNode> currentHierarchy = new List<XmlNode>();
+        private PageScannerContext _pageScannerContext;
 
         private XmlReader reader;
         private XmlDocument doc = new XmlDocument();
 
+        public List<PageElement> collectedElements;
+        public List<PageProperty> collectedProperties;
+        public List<GenericPageNode> collectedOther;
+
+        public List<PageNode> collectedPageNodes = new List<PageNode>();
+
+        public PageScannerContext Context
+        {
+            get { return _pageScannerContext; }
+        }
+
         public PageScanner(ONPage page)
         {
             this.page = page;
+            _pageScannerContext = new PageScannerContext(this);
 
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.IgnoreComments = true;
             settings.IgnoreWhitespace = true;
             reader = XmlReader.Create(new StringReader(page.pageXml), settings);
             doc.Load(reader);
+
+            Context.State = PageScannerContext.StateType.READY;
         }
 
         public void scan()
         {
-            XmlNode node = doc;
-            int levels = 0;
-            bool elevated = false;
+            if (Context.State != PageScannerContext.StateType.READY) throw new InvalidOperationException();
+
+            collectedOther = new List<GenericPageNode>();
+            collectedProperties = new List<PageProperty>();
+            collectedElements = new List<PageElement>();
+            collectedPageNodes = new List<PageNode>();
+
+            Context.NodeStack = new Stack<PageNode>();
+            Context.Node = doc;
+
+            Context.State = PageScannerContext.StateType.SCANNING;
+
             do
             {
-                if (node.NodeType != XmlNodeType.CDATA && PageNodeFactory.isElement(node))
+                if (!Context.Elevated)
                 {
-                    handleNode(node);
-                }
-                else if (!PageNodeFactory.isElement(node) && !PageNodeFactory.isElement(node))
-                {
-                    System.Console.WriteLine("NOT PROPERTY OR ELEMENT: " + node.Name);
+                    Context.LastGeneratedNode = handleNode(Context.Node);
                 }
 
-                iterateNode(node, out node, levels, out levels, elevated, out elevated);
-                //move through the document
-                /*
-                if (node.HasChildNodes && !elevated)
+                if (Context.Node.HasChildNodes && !Context.Elevated)
                 {
-                    node = node.FirstChild;
-                    levels++;
+                    Context.NodeStack.Push(Context.LastGeneratedNode);
+                    Context.Node = Context.Node.FirstChild;
                 }
-                else if (node.NextSibling != null)
+                else if (Context.Node.NextSibling != null)
                 {
-                    node = node.NextSibling;
-                    elevated = false;
+                    Context.Node = Context.Node.NextSibling;
+                    Context.Elevated = false;
                 }
                 else
                 {
-                    node = node.ParentNode;
-                    levels--;
-                    elevated = true;
-                }*/
-            } while (node != null);
+                    Context.Node = Context.Node.ParentNode;
+                    Context.Elevated = true;
+                    try
+                    {
+                        Context.NodeStack.Pop();
+                    }
+                    catch (InvalidOperationException e)
+                    {
+                        break;
+                    }
+                }
+            } while (Context.Node != null);
+
+            finish();
         }
 
-        public void iterateNode(XmlNode nodein, out XmlNode nodeout, int levelin, out int levelout, bool elevatedin, out bool elevatedout)
+
+        public PageNode handleNode(XmlNode xmlnode)
         {
-            //move through the document
-            if (nodein.HasChildNodes && !elevatedin)
+            PageNode pagenode = PageNodeFactory.GenerateNode(xmlnode);
+            if (pagenode is PageElement)
             {
-                nodeout = nodein.FirstChild;
-                levelout = ++levelin;
-                elevatedout = false;
+                PageElement element = (PageElement)pagenode;
+                collectedElements.Add(element);
+                collectedPageNodes.Add(element);
+
+                if (Context.NodeStack.Peek() is PageElement)
+                {
+                    ((PageElement)Context.NodeStack.Peek()).
+                        addChildElement(element);
+                }
             }
-            else if (nodein.NextSibling != null)
+
+            else if (pagenode is PageProperty)
             {
-                nodeout = nodein.NextSibling;
-                levelout = levelin;
-                elevatedout = false;
+                PageProperty property = (PageProperty)pagenode;
+                collectedProperties.Add(property);
+                collectedPageNodes.Add(property);
+
+                Context.NodeStack.Peek().AddProperty(property);
             }
+
             else
             {
-                nodeout = nodein.ParentNode;
-                levelout = --levelin;
-                elevatedout = true;
+                collectedOther.Add((GenericPageNode)pagenode);
+                collectedPageNodes.Add(pagenode);
+                if(Context.NodeStack.Count >0)
+                    Context.NodeStack.Peek().AddUndefinedSubNode(pagenode);
             }
-        }
-
-        public void handleNode(XmlNode xmlnode)
-        {
-            *PageElement pagenode = PageNodeFactory.GenerateNode(xmlnode);
-            processChildren(pagenode);
-        }
-
-        public void processChildren(PageElement node)
-        {
-        }
-
-        public bool isChildrenList(XmlNode node)
-        {
-            return (node.Name == NAME_OECHILDREN);
+            
+            return pagenode;
         }
 
         public bool isRecordedNode(XmlNode node)
@@ -113,6 +136,9 @@ namespace NicksPowerTool.ONReader
             return true;
         }
 
-        private String NAME_OECHILDREN = "one:OECHildren";
+        public void finish()
+        {
+            Context.State = PageScannerContext.StateType.DONE;
+        }
     }
 }
