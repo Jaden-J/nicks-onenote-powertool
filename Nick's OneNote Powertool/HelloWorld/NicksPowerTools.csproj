@@ -63,7 +63,6 @@
       <DependentUpon>DebugWin.cs</DependentUpon>
     </Compile>
     <Compile Include="LoadNPT.cs" />
-    <Compile Include="BinaryNode.cs" />
     <Compile Include="ONReader\NodeAttributes.cs" />
     <Compile Include="ONReader\NodeName.cs" />
     <Compile Include="ONReader\HierarchyNode.cs" />
@@ -140,13 +139,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="PullImageOCR\PullImageOCRText.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Ideas.txt" />
     <None Include="app.config" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

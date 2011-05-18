@@ -56,7 +56,9 @@ namespace NicksPowerTool
                 pageId = null;
 
 		}
-		public void OnStartupComplete(ref Array custom) { } 
+		public void OnStartupComplete(ref Array custom) {
+        }
+
 		public void OnAddInsUpdate(ref Array custom) { }
 
 		#endregion
@@ -89,6 +91,11 @@ namespace NicksPowerTool
             dialog.AddButton("Select", HierarchyElement.hePages, HierarchyElement.hePages, true);
             dialog.Run(this);
 		}
+
+        public void pullImageOCRText()
+        {
+
+        }
 
         
         public void OnDialogClosed(IQuickFilingDialog dialog)

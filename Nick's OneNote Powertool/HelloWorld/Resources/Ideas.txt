@@ -1,3 +1,8 @@
 ﻿Ideas:
 
 1) Click something and see what OneNote thinks it says. Maybe edit?
+
+2) Get all notes on top of highlighted pages
+     -Generate some classes for custom tagged page stuff here
+3) Star a page to make it highlighted
+4) Find highlighter text and include it on the custom tagged notes page
