@@ -6,7 +6,7 @@ using System.Text;
 namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties.LinkedNotes
 {
     [NodeName("LinkedNoteThumbnail")]
-    class LinkedNoteThumbnailProperty
+    class LinkedNoteThumbnailProperty : PageProperty
     {
     }
 }

@@ -22,7 +22,7 @@ namespace NicksPowerTool
 	{
 		#region IDTExtensibility2 Members
 
-		ApplicationClass onApp = new ApplicationClass();
+		public static ApplicationClass onApp;// = new ApplicationClass();
         String pageId;
         bool debugging = false;
 
@@ -87,6 +87,10 @@ namespace NicksPowerTool
 			//MessageBox.Show("Current Page ID = " + id, "Hello World!");
 
             IQuickFilingDialog dialog = onApp.QuickFiling();
+
+            dialog.CheckboxText = "Return binary";
+            dialog.CheckboxState = false;
+
             dialog.TreeDepth = HierarchyElement.hePages;
             dialog.AddButton("Select", HierarchyElement.hePages, HierarchyElement.hePages, true);
             dialog.Run(this);
@@ -105,34 +109,28 @@ namespace NicksPowerTool
             {
                 pageId = dialog.SelectedItem;
 
-                Thread t = new Thread(new ThreadStart(ShowDebugWindow));
+                Thread t = new Thread(new ParameterizedThreadStart(ShowDebugWindow));
                 t.SetApartmentState(ApartmentState.STA);
                 t.IsBackground = true;
-                t.Start();
+                t.Start(dialog);
             }
-            String nothing = "hi";
-            nothing.GetType();
         }
 
         [STAThread]
-        public void ShowDebugWindow()
+        public void ShowDebugWindow(object odialog)
         {
+            IQuickFilingDialog dialog = (IQuickFilingDialog)odialog;
             //DebugWindow.DebugImp di = new DebugWindow.DebugImp();
-            DebugWin di = new DebugWin();
 
             String pagexml;
-            onApp.GetPageContent(pageId, out pagexml);
+            onApp.GetPageContent(pageId, out pagexml, dialog.CheckboxState ? PageInfo.piBinaryDataSelection : PageInfo.piSelection);
 
+            DebugWin di = new DebugWin();
             di.DebugText = pagexml;
 
-            //di.Closed += (sender2, e2) => di.Dispatcher.InvokeShutdown();
-            //di.Dispatcher.ShutdownFinished += (sender, e2) => MessageBox.Show("Shutdown Finished");
-
             di.Show();
+            di.Activate();
             System.Windows.Threading.Dispatcher.Run();
-
-            String nothing = "nothing";
-            MessageBox.Show("End of ShowDebugWindow ");
         }
 
 		/// <summary>

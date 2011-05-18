@@ -6,7 +6,7 @@ using System.Text;
 namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties.LinkedNotes
 {
     [NodeName("LinkedNoteShortName")]
-    class LinkedNoteShortNameProperty
+    class LinkedNoteShortNameProperty : PageProperty
     {
     }
 }

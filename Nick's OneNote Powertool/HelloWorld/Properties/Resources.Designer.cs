@@ -80,8 +80,10 @@ namespace NicksPowerTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt; 
-        ///.
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
+        ///&lt;one:Page xmlns:one=&quot;http://schemas.microsoft.com/office/onenote/2010/onenote&quot; ID=&quot;{BAB66537-DBC6-44E2-AEA5-65902AB9C490}{1}{B0}&quot; name=&quot;PageInSection&quot; dateTime=&quot;2011-05-17T01:51:17.000Z&quot; lastModifiedTime=&quot;2011-05-18T03:09:40.000Z&quot; pageLevel=&quot;1&quot; isCurrentlyViewed=&quot;true&quot; lang=&quot;en-US&quot;&gt;
+        ///  &lt;one:QuickStyleDef index=&quot;0&quot; name=&quot;PageTitle&quot; fontColor=&quot;automatic&quot; highlightColor=&quot;automatic&quot; font=&quot;Calibri&quot; fontSize=&quot;17.0&quot; spaceBefore=&quot;0.0&quot; spaceAfter=&quot;0.0&quot; /&gt;
+        ///  &lt;one:QuickStyleDe [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string LinkedNotes {
             get {
@@ -106,6 +108,16 @@ namespace NicksPowerTool.Properties {
         internal static string ribbon {
             get {
                 return ResourceManager.GetString("ribbon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt; 
+        ///.
+        /// </summary>
+        internal static string SelectedSlide {
+            get {
+                return ResourceManager.GetString("SelectedSlide", resourceCulture);
             }
         }
     }

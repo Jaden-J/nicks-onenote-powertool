@@ -2,35 +2,54 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
+using System.Xml;
 
 namespace NicksPowerTool.ONReader
 {
     public abstract class PageNode : ONNode
     {
-        private List<PageProperty> properties = new List<PageProperty>();
-        private List<PageNode> _undefinedSubNodes = new List<PageNode>();
+        private List<PageNode> _PageNodes = new List<PageNode>();
+
         public List<PageProperty> PageProperties
         {
             get
             {
-                return properties;
+                //CHEATING!!!!
+                Object o = (object)_PageNodes.FindAll(match => match.GetType().Equals(typeof(PageProperty)));
+                return (List<PageProperty>)o;
             }
         }
-
-        public void AddProperty(PageProperty p)
+        public List<PageNode> PageNodes
         {
-            PageProperties.Add(p);
+            get
+            {
+                return _PageNodes;
+            }
         }
 
         public List<PageNode> UndefinedSubNodes
         {
-            get { return _undefinedSubNodes; }
-            set { _undefinedSubNodes = value; }
+            get
+            {
+                return PageNodes.FindAll(match => !match.GetType().Equals(typeof(PageProperty)) && !match.GetType().Equals(typeof(PageElement)));
+            }
         }
 
-        public void AddUndefinedSubNode(PageNode p)
+
+        public enum SelectedValue { NOT_SELECTED, PARTIAL, ALL }
+
+        [DefaultValue(SelectedValue.NOT_SELECTED)]
+        public SelectedValue Selected
         {
-            UndefinedSubNodes.Add(p);
+            get
+            {
+                return SelectedValue.NOT_SELECTED;
+            }
+        }
+
+        public void AddProperty(PageProperty property) {
+            PageNodes.Add(property);
         }
     }
 }
