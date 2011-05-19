@@ -29,6 +29,18 @@ namespace NicksPowerTool.ONReader.PageNodeParts
             XmlNode x = XmlAttributes.GetNamedItem(localName);
             return (x != null) ? x.Value : null;
         }
+
+        public bool SetAttributeValue(String localName, bool create, String value)
+        {
+            XmlNode x = XmlAttributes.GetNamedItem(localName);
+            if (x != null)
+            {
+                x.Value = value;
+                return true;
+            } else if (create) {
+                XmlAttributes.Append(new XmlAttribute)
+            }
+        }
     }
 }
 /*

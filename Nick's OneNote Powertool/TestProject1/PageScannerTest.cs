@@ -83,16 +83,7 @@ namespace XmLTest
             target.scan();
 
             XmlNode temp;
-            /*
-            System.Console.WriteLine("Elements: ");
-            foreach (PageNode node in target.collectedPageNodes)
-            {
-                temp = node.Node;
-                while ((temp = temp.ParentNode) != null) System.Console.Write("\t");
-                System.Console.WriteLine("\tName: " + node.Node.LocalName);// + "\t\tType: " + node.Node.Value);
-            }
-            System.Console.WriteLine("");
-            */
+
             System.Console.WriteLine("Other: ");
             foreach (GenericPageNode node in target.collectedOther)
             {

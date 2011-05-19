@@ -23,6 +23,9 @@ namespace NicksPowerTool.ONReader
         public List<PageProperty> collectedProperties;
         public List<GenericPageNode> collectedOther;
 
+        public delegate void NodeCreatedEventHandler(PageNode pn, PageScannerContext context);
+        public NodeCreatedEventHandler NodeCreated;
+
         public List<PageNode> collectedPageNodes = new List<PageNode>();
 
         public PageScannerContext Context
@@ -31,6 +34,11 @@ namespace NicksPowerTool.ONReader
         }
 
         public PageScanner(ONPage page)
+        {
+            SetPage(page);
+        }
+
+        private void SetPage(ONPage page)
         {
             this.page = page;
             _pageScannerContext = new PageScannerContext(this);
@@ -42,6 +50,14 @@ namespace NicksPowerTool.ONReader
             doc.Load(reader);
 
             Context.State = PageScannerContext.StateType.READY;
+        }
+
+        public PageScanner(String pageId)
+        {
+            String pageXml;
+            LoadNPT.onApp.GetPageContent(pageId, out pageXml, Microsoft.Office.Interop.OneNote.PageInfo.piSelection);
+
+            SetPage(new ONPage(pageXml));
         }
 
         public void scan()
@@ -97,6 +113,7 @@ namespace NicksPowerTool.ONReader
         public PageNode handleNode(XmlNode xmlnode)
         {
             PageNode pagenode = PageNodeFactory.GenerateNode(xmlnode, Context.Page);
+            NodeCreated(pagenode, Context);
 
             if (pagenode is ONPage)
             {

@@ -39,16 +39,17 @@
             this.debugText.Location = new System.Drawing.Point(13, 13);
             this.debugText.Multiline = true;
             this.debugText.Name = "debugText";
-            this.debugText.Size = new System.Drawing.Size(434, 362);
+            this.debugText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.debugText.Size = new System.Drawing.Size(779, 362);
             this.debugText.TabIndex = 0;
             // 
-            // Form1
+            // DebugWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(459, 387);
+            this.ClientSize = new System.Drawing.Size(804, 387);
             this.Controls.Add(this.debugText);
-            this.Name = "Form1";
+            this.Name = "DebugWin";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();

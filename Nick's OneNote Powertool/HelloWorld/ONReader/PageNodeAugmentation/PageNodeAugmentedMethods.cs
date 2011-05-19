@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NicksPowerTool.ONReader.PageNodes.PageNodeAugmentation.Interfaces;
 using NicksPowerTool.ONReader.PageNodes.PageNodeProperties;
 
-namespace NicksPowerTool.ONReader.PageNodes.PageNodeAugmentation
+namespace NicksPowerTool.ONReader.PageNodeAugmentation
 {
     public static class PageNodeAugmentedMethods
-    {       
+    {
+        #region IHasBinaryData
         public static string GetBinaryDataString(this IHasBinaryData n) {
             CallbackIDProperty cip = (CallbackIDProperty)((PageNode)n).
                 ChildPageNodes.Find(c => c.GetType().Equals(typeof(CallbackIDProperty)));
@@ -21,5 +21,13 @@ namespace NicksPowerTool.ONReader.PageNodes.PageNodeAugmentation
         {
             return Convert.FromBase64String(n.GetBinaryDataString());
         }
+        #endregion
+
+        #region IHasPosition
+        public static 
+        #endregion
+
+        #region IHasSize
+        #endregion
     }
 }

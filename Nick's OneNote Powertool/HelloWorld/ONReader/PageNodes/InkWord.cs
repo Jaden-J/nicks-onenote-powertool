@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NicksPowerTool.ONReader.PageNodes.PageNodeAugmentation.Interfaces;
+using NicksPowerTool.ONReader.PageNodeAugmentation;
 
 namespace NicksPowerTool.ONReader.PageNodes
 {

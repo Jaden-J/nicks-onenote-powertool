@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using System.Threading;
 
 namespace NicksPowerTool
 {
     public partial class DebugWin : Form
     {
-        public String DebugText
+        public String DebugXmlText
         {
             get
             {
@@ -35,9 +36,46 @@ namespace NicksPowerTool
             }
         }
 
+        public String DebugText
+        {
+            get
+            {
+                return debugText.Text;
+            }
+            set
+            {
+                debugText.Text = value;
+            }
+        }
+
         public DebugWin()
         {
             InitializeComponent();
+        }
+
+        [STAThread]
+        public static void ShowDebugXmlWindow(String xmlText)
+        {
+            DebugWin win = new DebugWin();
+            win.DebugXmlText = xmlText;
+            StartDebugWindowThread(win);
+        }
+
+        [STAThread]
+        private static void StartDebugWindowThread(DebugWin di)
+        {
+            Thread t = new Thread(new ThreadStart(() => { di.Show(); System.Windows.Threading.Dispatcher.Run(); }));
+            t.SetApartmentState(ApartmentState.STA);
+            t.IsBackground = true;
+            t.Start();
+        }
+
+        [STAThread]
+        public static void ShowDebugStringWindow(String s)
+        {
+            DebugWin di = new DebugWin();
+            di.DebugText = s;
+            StartDebugWindowThread(di);
         }
     }
 }

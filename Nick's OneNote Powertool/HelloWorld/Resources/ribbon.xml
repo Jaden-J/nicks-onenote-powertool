@@ -4,7 +4,10 @@
 		<tabs>
 			<tab id="tabCustom" label="Custom">
 				<group id="groupHello" label="Hello">
-					<button id="buttonHello" label="Hello World!" size="large" screentip="Press this for a 'Hello World' message" onAction="showHello" image="HelloWorld.png"/>
+					<button id="buttonHello" label="Hello World!" size="large" screentip="Press this for a 'Hello World' message"
+									onAction="showHello" image="HelloWorld.png"/>
+					<button id="buttonTestBinary" label="Test Binary" size="large" screentip="Tests a binary function"
+									onAction="showBinary" image="HelloWorld.png"/>
 				</group>
 			</tab>
 		</tabs>

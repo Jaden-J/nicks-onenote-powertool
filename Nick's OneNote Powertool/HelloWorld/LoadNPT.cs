@@ -14,38 +14,41 @@ using System.Drawing.Imaging;
 using System.Xaml;
 using System.Threading;
 using System.Collections;
+using NicksPowerTool.ONReader.PageNodes;
+using NicksPowerTool.ONReader;
+using NicksPowerTool.ONReader.PageNodeAugmentation;
 
 //61139959-A5E4-4261-977A-6262429033EB
 namespace NicksPowerTool
 {
-    [GuidAttribute("E0BDB923-AD41-4BA1-9311-252509FAD397"), ProgId("NicksPowerTool.LoadNPT")]
-	public class LoadNPT : IDTExtensibility2, IRibbonExtensibility, IQuickFilingDialogCallback
+	[GuidAttribute("E0BDB923-AD41-4BA1-9311-252509FAD397"), ProgId("NicksPowerTool.LoadNPT")]
+	public class LoadNPT : IDTExtensibility2, IRibbonExtensibility
 	{
 		#region IDTExtensibility2 Members
 
 		public static ApplicationClass onApp;// = new ApplicationClass();
-        String pageId;
-        bool debugging = false;
+		String pageId;
+		bool debugging = true;
 
-        public LoadNPT()
-        {
-            String text = "LoadNPT created";
-            if (debugging) MessageBox.Show(text);
-        }
+		public LoadNPT()
+		{
+			String text = "LoadNPT created";
+			if (debugging) MessageBox.Show(text);
+		}
 
 		public void OnConnection(object Application, ext_ConnectMode ConnectMode, object AddInInst, ref Array custom)
 		{
 			/*
 				For debugging, it is useful to have a MessageBox.Show() here, so that execution is paused while you have a chance to get VS to 'Attach to Process' 
 			*/
-            //if (debugging) MessageBox.Show("Starting the plugin");
-            onApp = (ApplicationClass)Application;
+			//if (debugging) MessageBox.Show("Starting the plugin");
+			onApp = (ApplicationClass)Application;
 		}
 		public void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref System.Array custom)
 		{
 			//Clean up. Application is closing
 			onApp = null;
-            pageId = null;
+			pageId = null;
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
 		}
@@ -53,12 +56,12 @@ namespace NicksPowerTool
 		{
 			if (onApp != null)
 				onApp = null;
-            if (pageId != null) 
-                pageId = null;
+			if (pageId != null) 
+				pageId = null;
 
 		}
 		public void OnStartupComplete(ref Array custom) {
-        }
+		}
 
 		public void OnAddInsUpdate(ref Array custom) { }
 
@@ -81,58 +84,27 @@ namespace NicksPowerTool
 		/// Called from the onAction="" parameter in ribbon.xml. This is effectivley the onClick() function
 		/// </summary>
 		/// <param name="control">The control that was just clicked. control.Id will give you its ID</param>
-        [STAThread]
+		[STAThread]
 		public void showHello(IRibbonControl control)
 		{
 			//string id = onApp.Windows.CurrentWindow.CurrentPageId;
 			//MessageBox.Show("Current Page ID = " + id, "Hello World!");
 
-            IQuickFilingDialog dialog = onApp.QuickFiling();
-
-            dialog.CheckboxText = "Return binary";
-            dialog.CheckboxState = false;
-
-            dialog.TreeDepth = HierarchyElement.hePages;
-            dialog.AddButton("Select", HierarchyElement.hePages, HierarchyElement.hePages, true);
-            dialog.Run(this);
+            Debugg.showHello(control);
 		}
 
-        public void pullImageOCRText()
-        {
+		public void showBinary(IRibbonControl control)
+		{
+			//string id = onApp.Windows.CurrentWindow.CurrentPageId;
+			//MessageBox.Show("Current Page ID = " + id, "Hello World!");
 
-        }
+            Debugg.showBinary(control);
+		}
 
-        
-        public void OnDialogClosed(IQuickFilingDialog dialog)
-        {
-            if (debugging) MessageBox.Show("Time");
-            if (dialog.PressedButton >= 0)
-            {
-                pageId = dialog.SelectedItem;
+		public void pullImageOCRText()
+		{
 
-                Thread t = new Thread(new ParameterizedThreadStart(ShowDebugWindow));
-                t.SetApartmentState(ApartmentState.STA);
-                t.IsBackground = true;
-                t.Start(dialog);
-            }
-        }
-
-        [STAThread]
-        public void ShowDebugWindow(object odialog)
-        {
-            IQuickFilingDialog dialog = (IQuickFilingDialog)odialog;
-            //DebugWindow.DebugImp di = new DebugWindow.DebugImp();
-
-            String pagexml;
-            onApp.GetPageContent(pageId, out pagexml, dialog.CheckboxState ? PageInfo.piBinaryDataSelection : PageInfo.piSelection);
-
-            DebugWin di = new DebugWin();
-            di.DebugText = pagexml;
-
-            di.Show();
-            di.Activate();
-            System.Windows.Threading.Dispatcher.Run();
-        }
+		}
 
 		/// <summary>
 		/// Called from the loadImage="" parameter in ribbon.xml. Converts the images into IStreams
@@ -142,7 +114,7 @@ namespace NicksPowerTool
 		{
 			MemoryStream mem = new MemoryStream();
 			Properties.Resources.HelloWorld.Save(mem, ImageFormat.Png);
-            
+			
 			return new CCOMStreamWrapper(mem);
 
 
@@ -163,28 +135,28 @@ namespace NicksPowerTool
 
 		#endregion
 
-        public void debug()
-        {
-            Window w = onApp.Windows[0];
+		public void debug()
+		{
+			Window w = onApp.Windows[0];
 
-            ulong handle = w.WindowHandle;
-            long lhandle = (long)handle;
-            String handleHex = handle.ToString("X");
-            String lhandleHex = lhandle.ToString("X");
-            String other = "hi";
-        }
+			ulong handle = w.WindowHandle;
+			long lhandle = (long)handle;
+			String handleHex = handle.ToString("X");
+			String lhandleHex = lhandle.ToString("X");
+			String other = "hi";
+		}
 
-        public static Window getActiveWindow()
-        {
-            Window result = null;
-            foreach (Window w in onApp.Windows)
-            {
-                if (w.Active)
-                {
-                    result = w;
-                }
-            }
-            return result;
-        }
+		public static Window getActiveWindow()
+		{
+			Window result = null;
+			foreach (Window w in onApp.Windows)
+			{
+				if (w.Active)
+				{
+					result = w;
+				}
+			}
+			return result;
+		}
 	}
 }
