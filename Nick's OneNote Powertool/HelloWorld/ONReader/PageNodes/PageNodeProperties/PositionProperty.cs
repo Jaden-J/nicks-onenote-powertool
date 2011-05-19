@@ -2,45 +2,63 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Shapes;
+using System.Windows;
 
 namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
 {
     [NodeName("Position")]
-    class PositionProperty : PageProperty
+    public class PositionProperty : PageProperty
     {
-        public double x
+        public double X
         {
             get
             {
-                return GetDoubleValue("x");
+                return Attributes.GetAttributeValueDouble("x");
             }
 
             set
             {
-                Attributes
+                Attributes.SetAttributeValue("x", false, value.ToString());
             }
         }
 
-        public double y
+        public double Y
         {
+            get
+            {
+                return Attributes.GetAttributeValueDouble("y");
+            }
 
+            set
+            {
+                Attributes.SetAttributeValue("y", false, value.ToString());
+            }
         }
 
-        public double z
+        public Point Location2D
         {
-
+            get
+            {
+                return new Point(X, Y);
+            }
+            set
+            {
+                X = value.X;
+                Y = value.Y;
+            }
         }
 
-        private double GetDoubleValue(String parameter)
+        public int Z
         {
-            String s = Attributes.GetAttributeValueString(parameter);
-            return Double.Parse(s);
-        }
+            get
+            {
+                return Attributes.GetAttributeValueInt("z");
+            }
 
-        private void SetDoubleValue(String parameter, double value)
-        {
-            Attributes.
+            set
+            {
+                Attributes.SetAttributeValue("z", false, value.ToString());
+            }
         }
     }
 }

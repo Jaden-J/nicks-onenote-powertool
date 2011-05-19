@@ -8,6 +8,8 @@
 									onAction="showHello" image="HelloWorld.png"/>
 					<button id="buttonTestBinary" label="Test Binary" size="large" screentip="Tests a binary function"
 									onAction="showBinary" image="HelloWorld.png"/>
+					<button id="buttonTestLocation" label="Test Location" size="large" screentip="Tests locations"
+									onAction="showLocation" image="HelloWorld.png"/>
 				</group>
 			</tab>
 		</tabs>

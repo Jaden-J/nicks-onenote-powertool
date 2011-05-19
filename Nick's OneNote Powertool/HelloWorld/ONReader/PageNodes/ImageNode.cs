@@ -7,7 +7,7 @@ using NicksPowerTool.ONReader.PageNodeAugmentation;
 namespace NicksPowerTool.ONReader.PageNodes
 {
     [NodeName("Image")]
-    class ImageNode : PageElement, IHasBinaryData
+    class ImageNode : PageElement, IHasBinaryData, IHasPageArea
     {
     }
 }

@@ -114,5 +114,25 @@ namespace NicksPowerTool
                 DebugWin.ShowDebugStringWindow(output);
             }
         }
+
+        public static void showLocation(IRibbonControl control)
+        {
+            String pageId = ONPage.getActivePageID();
+            String record = "";
+
+            PageScanner scanner = new PageScanner(pageId);
+            scanner.NodeCreated += (n, c) => {
+                if(n is IHasPageArea) {
+                    IHasPageArea a = (IHasPageArea)n;
+                    System.Windows.Rect r = a.GetRect();
+                    record += "Node: " + n.NodeName + "\r\n";
+                    record += "\tx = " + r.X + ", y = " + r.Y + ", z = " + a.GetZLevel() + "\r\n";
+                    record += "\twidth = " + r.Width + ", height = " + r.Height + "\r\n\r\n";
+                }
+            };
+            scanner.scan();
+
+            DebugWin.ShowDebugStringWindow(record);
+        }
     }
 }

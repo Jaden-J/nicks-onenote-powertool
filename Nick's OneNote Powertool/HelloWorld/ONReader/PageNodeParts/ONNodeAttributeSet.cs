@@ -37,10 +37,32 @@ namespace NicksPowerTool.ONReader.PageNodeParts
             {
                 x.Value = value;
                 return true;
-            } else if (create) {
-                XmlAttributes.Append(new XmlAttribute)
+            }
+            else if (create)
+            {
+                XmlAttribute a = Node.Node.OwnerDocument.CreateAttribute(localName);
+                a.Value = value;
+                XmlAttributes.Append(a);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
+
+        public double GetAttributeValueDouble(String localName) {
+            String s = GetAttributeValueString(localName);
+            double val = Double.Parse(s);
+            return val;
+        }
+
+        public int GetAttributeValueInt(String localName)
+        {
+            String s = GetAttributeValueString(localName);
+            int val = Int32.Parse(s);
+            return val;
+        } 
     }
 }
 /*

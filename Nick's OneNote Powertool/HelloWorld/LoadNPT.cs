@@ -78,8 +78,6 @@ namespace NicksPowerTool
 		}
 
 
-
-
 		/// <summary>
 		/// Called from the onAction="" parameter in ribbon.xml. This is effectivley the onClick() function
 		/// </summary>
@@ -101,9 +99,14 @@ namespace NicksPowerTool
             Debugg.showBinary(control);
 		}
 
+        public void showLocation(IRibbonControl control)
+        {
+            Debugg.showLocation(control);
+        }
+
 		public void pullImageOCRText()
 		{
-
+            
 		}
 
 		/// <summary>

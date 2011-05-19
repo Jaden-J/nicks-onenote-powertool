@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NicksPowerTool.ONReader.PageNodeAugmentation
 {
-    interface IHasPageArea : IHasPosition, IHasSize
+    public interface IHasPageArea : IHasPosition, IHasSize
     {
     }
 }

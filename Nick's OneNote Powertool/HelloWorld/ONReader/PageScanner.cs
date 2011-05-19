@@ -24,7 +24,7 @@ namespace NicksPowerTool.ONReader
         public List<GenericPageNode> collectedOther;
 
         public delegate void NodeCreatedEventHandler(PageNode pn, PageScannerContext context);
-        public NodeCreatedEventHandler NodeCreated;
+        public event NodeCreatedEventHandler NodeCreated;
 
         public List<PageNode> collectedPageNodes = new List<PageNode>();
 
@@ -113,7 +113,8 @@ namespace NicksPowerTool.ONReader
         public PageNode handleNode(XmlNode xmlnode)
         {
             PageNode pagenode = PageNodeFactory.GenerateNode(xmlnode, Context.Page);
-            NodeCreated(pagenode, Context);
+            if(NodeCreated != null)
+                NodeCreated(pagenode, Context);
 
             if (pagenode is ONPage)
             {

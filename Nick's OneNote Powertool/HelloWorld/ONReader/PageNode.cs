@@ -76,6 +76,17 @@ namespace NicksPowerTool.ONReader
             ChildPageNodes.Add(node);
         }
 
+        public PageNode GetChildNode(String localName)
+        {
+            return ChildPageNodes.First<PageNode>(n => n.NodeName == localName);
+        }
+
+        public T GetChildNode<T>() where T : PageNode
+        {
+            Type t = typeof(T);
+            return (T)ChildPageNodes.First(n => t.Equals(n.GetType()));
+        }
+
         public T finishConstruction<T>(XmlNode node, ONPage page) where T : PageNode
         {
             _OwnerPage = page;
