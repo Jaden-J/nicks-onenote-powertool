@@ -10,8 +10,10 @@
 									onAction="showBinary" image="HelloWorld.png"/>
 					<button id="buttonTestLocation" label="Test Location" size="large" screentip="Tests locations"
 									onAction="showLocation" image="HelloWorld.png"/>
-          <button id="buttonTestSelection" label="Test Selection" size="large" screentip="Tests selection"
+					<button id="buttonTestSelection" label="Test Selection" size="large" screentip="Tests selection"
 									onAction="showSelectedNode" image="HelloWorld.png"/>
+					<button id="buttonTestISF" label="Test ISF" size="large" screentip="Tests ISF"
+									onAction="showISF" image="HelloWorld.png"/>
 				</group>
 			</tab>
 		</tabs>

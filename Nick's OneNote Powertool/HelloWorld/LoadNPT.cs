@@ -109,6 +109,10 @@ namespace NicksPowerTool
             Debugg.showSelectedNode(control);
 		}
 
+        public void showISF(IRibbonControl control) {
+            Debugg.showISF(control);
+        }
+
 		/// <summary>
 		/// Called from the loadImage="" parameter in ribbon.xml. Converts the images into IStreams
 		/// </summary>

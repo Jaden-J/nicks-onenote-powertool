@@ -7,7 +7,7 @@ using NicksPowerTool.ONReader.PageNodeAugmentation;
 namespace NicksPowerTool.ONReader.PageNodes
 {
     [NodeName("InkDrawing")]
-    class InkDrawing : PageElement, IHasBinaryData, IHasPageArea
+    class InkDrawing : ISFPageNode, IHasBinaryData, IHasPageArea
     {
     }
 }

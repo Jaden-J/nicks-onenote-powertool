@@ -7,7 +7,7 @@ using NicksPowerTool.ONReader.PageNodeAugmentation;
 namespace NicksPowerTool.ONReader.PageNodes
 {
     [NodeName("InkParagraph")]
-    class InkParagraph : PageElement
+    class InkParagraph : PageElement, IHasRelativeArea
     {
     }
 }

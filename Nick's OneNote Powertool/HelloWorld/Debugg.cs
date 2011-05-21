@@ -164,5 +164,29 @@ namespace NicksPowerTool
 
             DebugWin.ShowDebugStringWindow(record);
         }
+
+        public static void showISF(IRibbonControl control)
+        {
+            String pageId = ONPage.getActivePageID();
+            String record = "";
+            List<ISFPageNode> nodes = new List<ISFPageNode>();
+
+            PageScanner scanner = new PageScanner(pageId);
+            scanner.NodeCreated += (n, c) =>
+            {
+                if (n.Selected == PageNode.SelectedValue.ALL && n is ISFPageNode)
+                {
+                    nodes.Add((ISFPageNode)n);
+                }
+            };
+
+            foreach (ISFPageNode isf in nodes)
+            {
+                record += isf.ToString();
+                record += "\r\n";
+            }
+
+            DebugWin.ShowDebugStringWindow(record);
+        }
     }
 }
