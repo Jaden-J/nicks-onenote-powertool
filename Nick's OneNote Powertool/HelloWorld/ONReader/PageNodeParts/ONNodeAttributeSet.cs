@@ -26,6 +26,10 @@ namespace NicksPowerTool.ONReader.PageNodeParts
         }
 
         public String GetAttributeValueString(String localName) {
+            if (XmlAttributes == null)
+            {
+                return "";
+            }
             XmlNode x = XmlAttributes.GetNamedItem(localName);
             return (x != null) ? x.Value : null;
         }
@@ -62,7 +66,17 @@ namespace NicksPowerTool.ONReader.PageNodeParts
             String s = GetAttributeValueString(localName);
             int val = Int32.Parse(s);
             return val;
-        } 
+        }
+
+        public override string ToString()
+        {
+            String result = "Attributes: ";
+            foreach (XmlNode node in XmlAttributes)
+            {
+                result += node.LocalName + "=" + node.Value + "; ";
+            }
+            return result;
+        }
     }
 }
 /*

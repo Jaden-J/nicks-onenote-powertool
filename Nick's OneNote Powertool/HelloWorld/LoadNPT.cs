@@ -104,9 +104,9 @@ namespace NicksPowerTool
             Debugg.showLocation(control);
         }
 
-		public void pullImageOCRText()
+		public void showSelectedNode(IRibbonControl control)
 		{
-            
+            Debugg.showSelectedNode(control);
 		}
 
 		/// <summary>

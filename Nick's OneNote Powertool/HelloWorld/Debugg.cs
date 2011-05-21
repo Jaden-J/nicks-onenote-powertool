@@ -134,5 +134,35 @@ namespace NicksPowerTool
 
             DebugWin.ShowDebugStringWindow(record);
         }
+
+        public static void showSelectedNode(IRibbonControl control)
+        {
+            String pageId = ONPage.getActivePageID();
+            String record = "";
+            List<ONNode> nodes = new List<ONNode>();
+
+            PageScanner scanner = new PageScanner(pageId);
+            scanner.NodeCreated += (n, c) =>
+            {
+                if (n.Selected != PageNode.SelectedValue.NOT_SELECTED)
+                {
+                    nodes.Add(n);
+                }
+            };
+
+            scanner.scan();
+
+            record += nodes.ElementAt(0) + "\r\n";
+
+            nodes.Reverse();
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                for (int j = 0; j < i; j++ )
+                    record += "\t";
+                record += nodes.ElementAt(i).Node.Name + "\r\n";
+            }
+
+            DebugWin.ShowDebugStringWindow(record);
+        }
     }
 }

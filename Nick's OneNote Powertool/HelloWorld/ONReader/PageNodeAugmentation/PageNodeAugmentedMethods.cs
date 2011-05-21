@@ -63,5 +63,18 @@ namespace NicksPowerTool.ONReader.PageNodeAugmentation
         }
         #endregion
 
+        #region IHasRelativeArea
+        public static Rect GetRelativePosition(this IHasRelativeArea inode)
+        {
+            PageNode node = (PageNode)inode;
+            double x = node.Attributes.GetAttributeValueDouble("x");
+            double y = node.Attributes.GetAttributeValueDouble("y");
+
+            double width = node.Attributes.GetAttributeValueDouble("width");
+            double height = node.Attributes.GetAttributeValueDouble("height");
+
+            return new Rect(x, y, width, height);
+        }
+        #endregion
     }
 }

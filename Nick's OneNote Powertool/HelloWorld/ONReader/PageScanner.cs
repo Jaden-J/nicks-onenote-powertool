@@ -76,28 +76,32 @@ namespace NicksPowerTool.ONReader
 
             do
             {
+
                 if (!Context.Elevated)
                 {
                     Context.LastGeneratedNode = handleNode(Context.Node);
                 }
 
-                if (Context.Node.HasChildNodes && !Context.Elevated)
+                if (!Context.Elevated && Context.Node.HasChildNodes)
                 {
                     Context.NodeStack.Push(Context.LastGeneratedNode);
                     Context.Node = Context.Node.FirstChild;
                 }
-                else if (Context.Node.NextSibling != null)
+                else if (Context.Node.NextSibling != null) 
                 {
+                    if (!Context.Elevated) NodeCreated(Context.LastGeneratedNode, Context); //NodeCreated
+                    //Completed. Going to next one. Didn't just finish a tree (not elevated). No children.
                     Context.Node = Context.Node.NextSibling;
                     Context.Elevated = false;
                 }
-                else
+                else //Node is finished. No siblings you've just finished its tree
                 {
                     Context.Node = Context.Node.ParentNode;
                     Context.Elevated = true;
                     try
                     {
-                        Context.NodeStack.Pop();
+                        PageNode completed = Context.NodeStack.Pop();
+                        NodeCreated(completed, Context); //NodeCreated
                     }
                     catch (InvalidOperationException e)
                     {
@@ -113,8 +117,6 @@ namespace NicksPowerTool.ONReader
         public PageNode handleNode(XmlNode xmlnode)
         {
             PageNode pagenode = PageNodeFactory.GenerateNode(xmlnode, Context.Page);
-            if(NodeCreated != null)
-                NodeCreated(pagenode, Context);
 
             if (pagenode is ONPage)
             {

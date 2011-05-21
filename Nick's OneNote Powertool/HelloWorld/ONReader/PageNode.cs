@@ -78,19 +78,33 @@ namespace NicksPowerTool.ONReader
 
         public PageNode GetChildNode(String localName)
         {
-            return ChildPageNodes.First<PageNode>(n => n.NodeName == localName);
+            foreach (PageNode n in ChildPageNodes)
+            {
+                if (n.NodeName.Equals(localName)) return n;
+            }
+            return null;
         }
 
         public T GetChildNode<T>() where T : PageNode
         {
-            Type t = typeof(T);
-            return (T)ChildPageNodes.First(n => t.Equals(n.GetType()));
+            foreach (PageNode n in ChildPageNodes)
+            {
+                if (n is T) return n as T;
+            }
+            return null;
         }
 
         public T finishConstruction<T>(XmlNode node, ONPage page) where T : PageNode
         {
             _OwnerPage = page;
             return finishConstruction<T>(node);
+        }
+
+        public override string ToString()
+        {
+            String result = "";
+            result += NodeName + ": Value=" + Node.Value + "; " + Attributes;
+            return result;
         }
     }
 }
