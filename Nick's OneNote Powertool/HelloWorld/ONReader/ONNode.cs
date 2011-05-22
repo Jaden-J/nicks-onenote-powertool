@@ -50,5 +50,15 @@ namespace NicksPowerTool
             this._Attributes = new ONNodeAttributeSet(this);
             return (T)this;
         }
+
+        public ONNode GetTopNode()
+        {
+            ONNode pn = this;
+            while (pn.ParentNode != null)
+            {
+                pn = pn.ParentNode;
+            }
+            return pn;
+        }
     }
 }

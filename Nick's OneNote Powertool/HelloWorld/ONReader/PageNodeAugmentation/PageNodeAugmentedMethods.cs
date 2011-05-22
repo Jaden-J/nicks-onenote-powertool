@@ -13,15 +13,34 @@ namespace NicksPowerTool.ONReader.PageNodeAugmentation
         public static string GetBinaryDataString(this IHasBinaryData n) {
             CallbackIDProperty cip = (CallbackIDProperty)((PageNode)n).
                 ChildPageNodes.Find(c => c.GetType().Equals(typeof(CallbackIDProperty)));
-            String binaryString;
-            LoadNPT.onApp.GetBinaryPageContent(cip.OwnerPage.PageID, cip.CallbackIDValue, out binaryString);
-            return binaryString;
+            if (cip != null)
+            {
+                String binaryString = "";
+                LoadNPT.onApp.GetBinaryPageContent(cip.OwnerPage.PageID, cip.CallbackIDValue, out binaryString);
+                return binaryString;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static byte[] GetBinaryData(this IHasBinaryData n)
         {
-            return Convert.FromBase64String(n.GetBinaryDataString());
+            String s = n.GetBinaryDataString();
+            if (s != null)
+            {
+                return Convert.FromBase64String(n.GetBinaryDataString());
+            }
+            else
+            {
+                return null;
+            }
         }
+
+        /*public static SetBinaryData(this IHasBinaryData n, byte[] data) {
+            
+        }*/
         #endregion
 
         #region IHasPosition

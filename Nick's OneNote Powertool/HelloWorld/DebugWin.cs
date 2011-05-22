@@ -64,7 +64,12 @@ namespace NicksPowerTool
         [STAThread]
         private static void StartDebugWindowThread(DebugWin di)
         {
-            Thread t = new Thread(new ThreadStart(() => { di.Show(); System.Windows.Threading.Dispatcher.Run(); }));
+            Thread t = new Thread(new ThreadStart(() => { 
+                di.Show();
+                di.Focus();
+                di.BringToFront();
+                di.Activate();
+                System.Windows.Threading.Dispatcher.Run(); }));
             t.SetApartmentState(ApartmentState.STA);
             t.IsBackground = true;
             t.Start();

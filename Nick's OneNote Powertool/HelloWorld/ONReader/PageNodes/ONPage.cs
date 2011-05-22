@@ -14,6 +14,7 @@ namespace NicksPowerTool.ONReader.PageNodes
         public ONPage()
         {
         }
+
         public ONPage(String pageXml)
         {
             this.pageXml = pageXml;

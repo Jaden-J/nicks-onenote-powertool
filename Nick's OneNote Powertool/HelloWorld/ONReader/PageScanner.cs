@@ -11,7 +11,15 @@ namespace NicksPowerTool.ONReader
 {
     public class PageScanner
     {
-        private ONPage page;
+        public ONPage Page;
+        private String _RawXml;
+        public String RawXml
+        {
+            get {
+                return _RawXml;
+            }
+        }
+
         private List<NodeHandler> handlers = new List<NodeHandler>();
         private List<ONNode> nodes = new List<ONNode>();
         private PageScannerContext _pageScannerContext;
@@ -33,32 +41,42 @@ namespace NicksPowerTool.ONReader
             get { return _pageScannerContext; }
         }
 
+
+        //page must be filled with text already, used for debugging only
         public PageScanner(ONPage page)
         {
-            SetPage(page);
+            _RawXml = page.pageXml;
+            Initialize();
         }
 
-        private void SetPage(ONPage page)
-        {
-            this.page = page;
-            _pageScannerContext = new PageScannerContext(this);
-
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.IgnoreComments = true;
-            settings.IgnoreWhitespace = true;
-            reader = XmlReader.Create(new StringReader(page.pageXml), settings);
-            doc.Load(reader);
-
-            Context.State = PageScannerContext.StateType.READY;
-        }
 
         public PageScanner(String pageId)
         {
             String pageXml;
             LoadNPT.onApp.GetPageContent(pageId, out pageXml, Microsoft.Office.Interop.OneNote.PageInfo.piSelection);
 
-            SetPage(new ONPage(pageXml));
+            _RawXml = pageXml;
+            Initialize();
         }
+
+        private void Initialize()
+        {
+            _pageScannerContext = new PageScannerContext(this);
+
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.IgnoreComments = true;
+            settings.IgnoreWhitespace = true;
+            reader = XmlReader.Create(new StringReader(RawXml), settings);
+            doc.Load(reader);
+
+            Context.State = PageScannerContext.StateType.READY;
+
+            NodeCreated += new NodeCreatedEventHandler((n, c) =>
+            {
+                if (n is ONPage) Page = (ONPage)n;
+            });
+        }
+
 
         public void scan()
         {

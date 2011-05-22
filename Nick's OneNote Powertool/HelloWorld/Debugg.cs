@@ -16,11 +16,15 @@ using System.Runtime.InteropServices.ComTypes;
 using Microsoft.Office.Interop.OneNote;
 using System.IO;
 using NicksPowerTool.ONReader.PageNodes;
+using NicksPowerTool.ONReader.PageNodes.PageNodeProperties;
 using NicksPowerTool.ONReader;
+using System.Xml;
 using NicksPowerTool.ONReader.PageNodeAugmentation;
 
 
 using System.Drawing.Imaging;
+using System.Text;
+
 
 
 namespace NicksPowerTool
@@ -180,6 +184,16 @@ namespace NicksPowerTool
                 }
             };
 
+            scanner.NodeCreated += (n, c) =>
+            {
+                if (n is CDataProperty && n.ParentNodesStack.Any(t => t is PageTitle))
+                {
+                    ((CDataProperty)n).Node.Value = "REWROTE PAGE TITLE";
+                }
+            };
+
+            scanner.scan();
+
             foreach (ISFPageNode isf in nodes)
             {
                 record += isf.ToString();
@@ -187,6 +201,24 @@ namespace NicksPowerTool
             }
 
             DebugWin.ShowDebugStringWindow(record);
+
+            DialogResult result = MessageBox.Show("Want to try rewriting the page?", "Be careful, BETA!!!", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                DebugWin.ShowDebugStringWindow(scanner.RawXml);
+                StringBuilder sb = new StringBuilder();
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.NewLineHandling = NewLineHandling.Replace;
+                settings.NewLineChars = "";
+                settings.Indent = false;
+                settings.CloseOutput = true;
+                settings.Encoding = System.Text.Encoding.Default;
+                scanner.Page.Node.OwnerDocument.Save(XmlWriter.Create(sb, settings));
+                DebugWin.ShowDebugStringWindow("Changed to: " + sb.ToString());
+                String tstring = "";
+                LoadNPT.onApp.GetPageContent(pageId, out tstring, PageInfo.piSelection, XMLSchema.xs2010);
+                LoadNPT.onApp.UpdatePageContent(tstring);
+            }
         }
     }
 }
