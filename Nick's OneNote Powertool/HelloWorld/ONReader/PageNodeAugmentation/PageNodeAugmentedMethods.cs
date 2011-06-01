@@ -11,8 +11,7 @@ namespace NicksPowerTool.ONReader.PageNodeAugmentation
     {
         #region IHasBinaryData
         public static string GetBinaryDataString(this IHasBinaryData n) {
-            CallbackIDProperty cip = (CallbackIDProperty)((PageNode)n).
-                ChildPageNodes.Find(c => c.GetType().Equals(typeof(CallbackIDProperty)));
+            CallbackIDProperty cip = ((PageNode)n).GetChildNode<CallbackIDProperty>();
             if (cip != null)
             {
                 String binaryString = "";

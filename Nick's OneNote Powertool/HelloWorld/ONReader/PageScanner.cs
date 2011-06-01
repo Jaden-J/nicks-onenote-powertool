@@ -114,10 +114,18 @@ namespace NicksPowerTool.ONReader
                 }
                 else //Node is finished. No siblings you've just finished its tree
                 {
-                    Context.Node = Context.Node.ParentNode;
-                    Context.Elevated = true;
+                    
                     try
                     {
+                        if (!Context.Elevated) //If you're at the very bottom, so you 
+                            //need to handle current node and the parent.
+                        {
+                            NodeCreated(Context.LastGeneratedNode, Context);
+                        }
+
+                        Context.Node = Context.Node.ParentNode;
+                        Context.Elevated = true;
+
                         PageNode completed = Context.NodeStack.Pop();
                         NodeCreated(completed, Context); //NodeCreated
                     }
@@ -134,7 +142,7 @@ namespace NicksPowerTool.ONReader
 
         public PageNode handleNode(XmlNode xmlnode)
         {
-            PageNode pagenode = PageNodeFactory.GenerateNode(xmlnode, Context.Page);
+            PageNode pagenode = PageNodeFactory.GenerateNode(Context);
 
             if (pagenode is ONPage)
             {

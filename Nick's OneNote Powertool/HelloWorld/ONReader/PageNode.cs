@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Xml;
 using System.Reflection;
 using NicksPowerTool.ONReader.PageNodes;
+using System.Collections;
 
 namespace NicksPowerTool.ONReader
 {
@@ -30,6 +31,8 @@ namespace NicksPowerTool.ONReader
                 return ((NodeName)this.GetType().GetCustomAttributes(typeof(NodeName), false).First()).Name;
             }
         }
+
+        public Dictionary<String, String>
 
         public List<PageNode> ChildPageNodes
         {
@@ -72,6 +75,35 @@ namespace NicksPowerTool.ONReader
             }
         }
 
+        public PageNode ParentNode { get; set; }
+
+        public Stack<PageNode> ParentNodesStack
+        {
+            get
+            {
+                List<PageNode> list = new List<PageNode>();
+                PageNode temp = this;
+                while ((temp = temp.ParentNode) != null)
+                {
+                    list.Add(temp);
+                }
+                list.Reverse();
+                return new Stack<PageNode>(list);
+            }
+        }
+
+        //CONSTRUCTOR
+        public PageNode() : base() { }
+
+        public PageNode(PageNode parent) : base()
+        {
+            XmlDocument doc = parent.Node.OwnerDocument;
+            XmlElement e = doc.CreateElement(NodeName);
+
+
+                //YOU SHOULD MAKE ATTRIBUTES FOR THIS FOR AUTOMATIC DEFAULT CONSTRUCTION
+        }
+
         public void AddChildNode(PageNode node) {
             ChildPageNodes.Add(node);
         }
@@ -94,10 +126,41 @@ namespace NicksPowerTool.ONReader
             return null;
         }
 
-        public T finishConstruction<T>(XmlNode node, ONPage page) where T : PageNode
+        public List<T> GetChildNodes<T>() where T : PageNode
         {
-            _OwnerPage = page;
-            return finishConstruction<T>(node);
+            List<T> result = new List<T>();
+            foreach (PageNode n in ChildPageNodes)
+            {
+                if (n is T) result.Add(n as T);
+            }
+            return result;
+        }
+
+        public T finishConstruction<T>(PageScannerContext context) where T : PageNode
+        {
+            _OwnerPage = context.Page;
+            try
+            {
+                ParentNode = context.NodeStack.Peek();
+            }
+            catch (Exception e)
+            {
+                ParentNode = null;
+            }
+            return finishConstruction<T>(context.Node);
+        }
+
+        public PageScannerContext GetContextForChild() //WON'T INCLUDE A NODE
+        {
+            PageScannerContext result = new PageScannerContext(null);
+
+            Stack<PageNode> ps = ParentNodesStack;
+            ps.Push(this);
+            result.NodeStack = ps;
+
+            result.Page = OwnerPage;
+
+            return result;
         }
 
         public override string ToString()

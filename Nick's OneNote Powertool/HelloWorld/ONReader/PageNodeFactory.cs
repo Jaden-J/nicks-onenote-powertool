@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 using NicksPowerTool.ONReader.PageNodes;
+using NicksPowerTool.ONReader.PageNodeAugmentation;
 
 namespace NicksPowerTool.ONReader
 {
@@ -33,8 +34,10 @@ namespace NicksPowerTool.ONReader
             }
         }
 
-        public static PageNode GenerateNode(XmlNode node, ONPage page)
+        public static PageNode GenerateNode(PageScannerContext context)
         {
+            XmlNode node = context.Node;
+
             if (node == null) {
                 return null;
             }
@@ -47,7 +50,7 @@ namespace NicksPowerTool.ONReader
                 if (PageElements.TryGetValue(node.LocalName, out elementType))
                 {
                     ConstructorInfo c = elementType.GetConstructor(types);
-                    return ((PageElement)c.Invoke(objects)).finishConstruction<PageElement>(node, page);
+                    return ((PageElement)c.Invoke(objects)).finishConstruction<PageElement>(context);
                 }
                 else
                 {
@@ -62,7 +65,7 @@ namespace NicksPowerTool.ONReader
                 if (PageProperties.TryGetValue(node.LocalName, out elementType))
                 {
                     ConstructorInfo c = elementType.GetConstructor(types);
-                    return ((PageProperty)c.Invoke(objects)).finishConstruction<PageProperty>(node, page);
+                    return ((PageProperty)c.Invoke(objects)).finishConstruction<PageProperty>(context);
                 }
                 else
                 {
@@ -71,7 +74,7 @@ namespace NicksPowerTool.ONReader
             }
             else
             {
-                return new GenericPageNode().finishConstruction<GenericPageNode>(node, page);
+                return new GenericPageNode().finishConstruction<GenericPageNode>(context);
             }
         }
 
@@ -119,6 +122,24 @@ namespace NicksPowerTool.ONReader
         public static bool isOneNoteNode(XmlNode node)
         {
             return node.Name.StartsWith("one:") || node.NodeType == XmlNodeType.CDATA;
+        }
+
+        public static T ConstructNewPageNode<T>(PageNode parent) where T : PageNode
+        {
+            Type t = typeof(T);
+            if (t.GetInterfaces().Contains(typeof(ICanConstruct)))
+            {
+                Type[] prams = {typeof(PageNode)};
+                Object[] input = {parent};
+                ConstructorInfo c = t.GetConstructor(prams);
+                Object o = c.Invoke(input);
+                T newNode = (T)o;
+                return newNode;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

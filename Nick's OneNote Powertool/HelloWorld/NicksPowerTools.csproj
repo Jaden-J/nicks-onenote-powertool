@@ -76,6 +76,7 @@
     <Compile Include="ONReader\PageNodeAugmentation\IHasPosition.cs" />
     <Compile Include="ONReader\PageNodeAugmentation\IHasRelativeArea.cs" />
     <Compile Include="ONReader\PageNodeAugmentation\IHasSize.cs" />
+    <Compile Include="ONReader\PageNodeAugmentation\ICanConstruct.cs" />
     <Compile Include="ONReader\PageNodeFactory.cs" />
     <Compile Include="ONReader\PageNodeParts\ONNodeAttributeSet.cs" />
     <Compile Include="ONReader\PageNodes\InkParagraph.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="ONReader\Tools\PageAttributeTools.cs" />
     <Compile Include="ONReader\Tools\SelectionTools.cs" />
     <Compile Include="ONWriter\ONPageContentUpdater.cs" />
+    <Compile Include="ONWriter\ONXmlWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

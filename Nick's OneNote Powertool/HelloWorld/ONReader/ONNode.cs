@@ -13,22 +13,7 @@ namespace NicksPowerTool
     public abstract class ONNode
     {
         public XmlNode Node { get; set; }
-        public ONNode ParentNode { get; set; }
-
-        public Stack<ONNode> ParentNodesStack
-        {
-            get
-            {
-                List<ONNode> list = new List<ONNode>();
-                ONNode temp = this;
-                while (temp != null)
-                {
-                    list.Add(temp);
-                }
-                list.Reverse();
-                return new Stack<ONNode>(list);
-            }
-        }
+        
         public bool Changed { get; set; }
         private ONNodeAttributeSet _Attributes;
         public ONNodeAttributeSet Attributes
@@ -50,7 +35,7 @@ namespace NicksPowerTool
             this._Attributes = new ONNodeAttributeSet(this);
             return (T)this;
         }
-
+        /*
         public ONNode GetTopNode()
         {
             ONNode pn = this;
@@ -59,6 +44,6 @@ namespace NicksPowerTool
                 pn = pn.ParentNode;
             }
             return pn;
-        }
+        }*/
     }
 }

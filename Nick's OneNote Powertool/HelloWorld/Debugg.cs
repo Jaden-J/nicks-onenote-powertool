@@ -186,9 +186,13 @@ namespace NicksPowerTool
 
             scanner.NodeCreated += (n, c) =>
             {
-                if (n is CDataProperty && n.ParentNodesStack.Any(t => t is PageTitle))
+                System.Console.WriteLine(n.Node.Name);
+                if (n is TProperty)                    
                 {
-                    ((CDataProperty)n).Node.Value = "REWROTE PAGE TITLE";
+                    if (n.ParentNodesStack.Any(t => t is PageTitle))
+                    {
+                        n.GetChildNode<CDataProperty>().Node.Value = "REWROTE PAGE TITLE";
+                    }
                 }
             };
 
@@ -217,7 +221,7 @@ namespace NicksPowerTool
                 DebugWin.ShowDebugStringWindow("Changed to: " + sb.ToString());
                 String tstring = "";
                 LoadNPT.onApp.GetPageContent(pageId, out tstring, PageInfo.piSelection, XMLSchema.xs2010);
-                LoadNPT.onApp.UpdatePageContent(tstring);
+                LoadNPT.onApp.UpdatePageContent(sb.ToString());
             }
         }
     }
