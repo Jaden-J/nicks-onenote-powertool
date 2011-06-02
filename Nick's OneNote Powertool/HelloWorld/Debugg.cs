@@ -219,8 +219,8 @@ namespace NicksPowerTool
                 settings.Encoding = System.Text.Encoding.Default;
                 scanner.Page.Node.OwnerDocument.Save(XmlWriter.Create(sb, settings));
                 DebugWin.ShowDebugStringWindow("Changed to: " + sb.ToString());
-                String tstring = "";
-                LoadNPT.onApp.GetPageContent(pageId, out tstring, PageInfo.piSelection, XMLSchema.xs2010);
+                //String tstring = "";
+                //LoadNPT.onApp.GetPageContent(pageId, out tstring, PageInfo.piSelection, XMLSchema.xs2010);
                 LoadNPT.onApp.UpdatePageContent(sb.ToString());
             }
         }

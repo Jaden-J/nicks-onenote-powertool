@@ -32,8 +32,6 @@ namespace NicksPowerTool.ONReader
             }
         }
 
-        public Dictionary<String, String>
-
         public List<PageNode> ChildPageNodes
         {
             get
@@ -47,6 +45,36 @@ namespace NicksPowerTool.ONReader
             get
             {
                 return ChildPageNodes.FindAll(match => !match.GetType().Equals(typeof(PageProperty)) && !match.GetType().Equals(typeof(PageElement)));
+            }
+        }
+
+        public PageNode NextSibling
+        {
+            get
+            {
+                try
+                {
+                    return ParentNode.ChildPageNodes[ParentNode.ChildPageNodes.IndexOf(this) + 1];
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+            }
+        }
+
+        public PageNode PreviousSibling
+        {
+            get
+            {
+                try
+                {
+                    return ParentNode.ChildPageNodes[ParentNode.ChildPageNodes.IndexOf(this) - 1];
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
             }
         }
 
@@ -100,12 +128,32 @@ namespace NicksPowerTool.ONReader
             XmlDocument doc = parent.Node.OwnerDocument;
             XmlElement e = doc.CreateElement(NodeName);
 
-
-                //YOU SHOULD MAKE ATTRIBUTES FOR THIS FOR AUTOMATIC DEFAULT CONSTRUCTION
+            Node = e;
+            parent.AddChildNode(this, true);
+            //YOU SHOULD MAKE ATTRIBUTES FOR THIS FOR AUTOMATIC DEFAULT CONSTRUCTION
         }
 
         public void AddChildNode(PageNode node) {
-            ChildPageNodes.Add(node);
+            AddChildNode(node, false);
+        }
+
+        public void AddChildNode(PageNode child, Boolean adaptXml)
+        {
+            ChildPageNodes.Add(child);
+
+            if (adaptXml)
+            {
+                Node.AppendChild(child.Node);
+
+                PageScannerContext childContext = GetContextForChild(child);
+                child.finishConstruction<PageNode>(childContext);
+            }
+        }
+
+        public void RemoveChildNode(PageNode node)
+        {
+            Node.RemoveChild(node.Node);
+            _PageNodes.Remove(node);
         }
 
         public PageNode GetChildNode(String localName)
@@ -150,13 +198,15 @@ namespace NicksPowerTool.ONReader
             return finishConstruction<T>(context.Node);
         }
 
-        public PageScannerContext GetContextForChild() //WON'T INCLUDE A NODE
+        public PageScannerContext GetContextForChild(PageNode child) //WON'T INCLUDE A NODE
         {
-            PageScannerContext result = new PageScannerContext(null);
+            PageScannerContext result = new PageScannerContext(null); //Oh god this code is so horrible
 
             Stack<PageNode> ps = ParentNodesStack;
             ps.Push(this);
             result.NodeStack = ps;
+
+            result.Node = child.Node; //So make sure to set the node first!
 
             result.Page = OwnerPage;
 

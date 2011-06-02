@@ -13,8 +13,6 @@ namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
         public DataProperty(PageNode parent) : base()
         {
             XmlElement e = parent.Node.OwnerDocument.CreateElement("Data");
-
-            finishConstruction<DataProperty>();
         }
     }
 }

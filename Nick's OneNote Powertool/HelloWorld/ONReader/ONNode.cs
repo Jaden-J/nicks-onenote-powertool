@@ -31,7 +31,7 @@ namespace NicksPowerTool
 
         public T finishConstruction<T>(XmlNode node) where T : ONNode
         {
-            this.Node = node;
+            if (node != null) this.Node = node;
             this._Attributes = new ONNodeAttributeSet(this);
             return (T)this;
         }

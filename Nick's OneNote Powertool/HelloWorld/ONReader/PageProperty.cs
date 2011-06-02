@@ -7,5 +7,7 @@ namespace NicksPowerTool.ONReader
 {
     public abstract class PageProperty : PageNode
     {
+        public PageProperty() : base() { } 
+        public PageProperty(PageNode pn) : base(pn) {}
     }
 }

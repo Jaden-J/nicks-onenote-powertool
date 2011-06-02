@@ -12,11 +12,16 @@ namespace NicksPowerTool.ONReader.PageNodeAugmentation
         #region IHasBinaryData
         public static string GetBinaryDataString(this IHasBinaryData n) {
             CallbackIDProperty cip = ((PageNode)n).GetChildNode<CallbackIDProperty>();
+            DataProperty dp = ((PageNode)n).GetChildNode<DataProperty>();
             if (cip != null)
             {
                 String binaryString = "";
                 LoadNPT.onApp.GetBinaryPageContent(cip.OwnerPage.PageID, cip.CallbackIDValue, out binaryString);
                 return binaryString;
+            }
+            else if (dp != null)
+            {
+                return dp.Node.Value;
             }
             else
             {
@@ -34,6 +39,27 @@ namespace NicksPowerTool.ONReader.PageNodeAugmentation
             else
             {
                 return null;
+            }
+        }
+
+        public static bool ReplaceCallbackWithData(this IHasBinaryData n)
+        {
+            PageNode pn = ((PageNode)n);
+            CallbackIDProperty cip = ((PageNode)n).GetChildNode<CallbackIDProperty>();
+            if (cip != null)
+            {
+                String data = n.GetBinaryDataString();
+
+                DataProperty dp = new DataProperty(pn);
+                dp.Node.Value = data;
+
+                pn.RemoveChildNode(cip);
+
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
