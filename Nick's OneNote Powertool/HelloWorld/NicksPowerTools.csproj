@@ -63,6 +63,7 @@
       <DependentUpon>DebugWin.cs</DependentUpon>
     </Compile>
     <Compile Include="LoadNPT.cs" />
+    <Compile Include="ONAppTools.cs" />
     <Compile Include="ONReader\ISFPageNode.cs" />
     <Compile Include="ONReader\NodeAttributes.cs" />
     <Compile Include="ONReader\NodeName.cs" />
