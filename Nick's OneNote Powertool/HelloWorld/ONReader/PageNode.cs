@@ -84,7 +84,7 @@ namespace NicksPowerTool.ONReader
         {
             get
             {
-                switch (Attributes.GetAttributeValueString("selected")) {
+                switch (Attributes.GetAttributeValue("selected")) {
                     case "partial":
                         return SelectedValue.PARTIAL;
                     case "all":

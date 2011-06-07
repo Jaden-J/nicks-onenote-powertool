@@ -35,6 +35,11 @@ namespace NicksPowerTool
             this._Attributes = new ONNodeAttributeSet(this);
             return (T)this;
         }
+
+        public static DateTime ParseDateTime(string date)
+        {
+            DateTime.
+        }
         /*
         public ONNode GetTopNode()
         {

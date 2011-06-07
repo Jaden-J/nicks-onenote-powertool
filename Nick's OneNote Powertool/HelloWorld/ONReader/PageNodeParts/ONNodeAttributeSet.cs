@@ -25,7 +25,7 @@ namespace NicksPowerTool.ONReader.PageNodeParts
             XNode = node.Node;
         }
 
-        public String GetAttributeValueString(String localName) {
+        public String GetAttributeValue(String localName) {
             if (XmlAttributes == null)
             {
                 return "";
@@ -56,16 +56,52 @@ namespace NicksPowerTool.ONReader.PageNodeParts
         }
 
         public double GetAttributeValueDouble(String localName) {
-            String s = GetAttributeValueString(localName);
+            String s = GetAttributeValue(localName);
             double val = Double.Parse(s);
+            return val;
+        }
+
+        public bool GetAttributeValueBool(String localName)
+        {
+            String s = GetAttributeValue(localName);
+            bool val = Boolean.Parse(s);
             return val;
         }
 
         public int GetAttributeValueInt(String localName)
         {
-            String s = GetAttributeValueString(localName);
+            String s = GetAttributeValue(localName);
             int val = Int32.Parse(s);
             return val;
+        }
+
+        public void AddOrChangeAttribute(String attributeName, String attributeValue)
+        {
+            XmlDocument doc = XNode.OwnerDocument;
+            XmlAttribute attr = GetAttribute(attributeName);
+            if (attr == null)
+            {
+                attr = doc.CreateAttribute(attributeName, XNode.NamespaceURI);
+            }
+
+            attr.Value = attributeValue;
+        }
+
+        public bool ContainsAttribute(String attributeName)
+        {
+            return GetAttribute(attributeName) == null;
+        }
+
+        private XmlAttribute GetAttribute(String attributeName)
+        {
+            foreach (XmlNode n in XNode.Attributes)
+            {
+                if (n.Name == attributeName)
+                {
+                    return n as XmlAttribute;
+                }
+            }
+            return null;
         }
 
         public override string ToString()

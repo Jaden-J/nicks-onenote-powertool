@@ -1,0 +1,1671 @@
+﻿<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://schemas.microsoft.com/office/onenote/2007/onenote"
+            xmlns="http://schemas.microsoft.com/office/onenote/2007/onenote"
+            elementFormDefault="qualified">
+
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+      Microsoft Office OneNote 2007 import/export XML schema.  For more information
+      regarding the OneNote 2007 API please visit:
+      http://msdn.microsoft.com/office/program/onenote/
+
+      Note that all values are in points.
+
+      © 2006 Microsoft Corporation
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <!-- Root elements -->
+  <xsd:element name="Notebooks" type="Notebooks"/>
+  <xsd:element name="Notebook" type="Notebook"/>
+  <xsd:element name="OpenSections" type="OpenSections"/>
+  <xsd:element name="UnfiledNotes" type="UnfiledNotes"/>
+  <xsd:element name="LiveSharedSections" type="LiveSharedSections"/>
+  <xsd:element name="SectionGroup" type="SectionGroup"/>
+  <xsd:element name="Section" type="Section"/>
+  <xsd:element name="Page" type="Page"/>
+
+  <!-- Notebooks. -->
+  <xsd:complexType name="Notebooks">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        This is the top-level root node which contains all of the OneNote hierarchy items.
+        This will include notebooks, the Unfiled Notes section, currently Open Sections
+        and any Live Sharing Sessions.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Notebook" type="Notebook" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="UnfiledNotes" type="UnfiledNotes" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="OpenSections" type="OpenSections" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="LiveSharedSections" type="LiveSharedSections" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- UnfiledNotes. -->
+  <xsd:complexType name="UnfiledNotes">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        The Unfiled Notes section is the default location for unfiled notes.This section
+        may or may not appear in a user's notebook and by default is not part of one
+        of the user's set of notebooks.  If this section is in a user's notebook the
+        Unfiled Notes will not appear in the export XML, instead you would need to use
+        the GetSpecialLocation method to get the path to the Unfiled Notes section.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Section" type="Section" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="isCurrentlyViewed" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          When any item is currently in viewed in the OneNote UI this property will be
+          set to true, otherwise it will not appear in the export XML.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="ID" type="ObjectID"/>
+  </xsd:complexType>
+
+  <!-- OpenSections. -->
+  <xsd:complexType name="OpenSections">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Open Sections contains all of the currently opened sections in OneNote.
+        These sections are automatically closed when OneNote exits.  If there
+        are no open sections then this will not appear in the export XML.
+
+        Any section which is currently open in a notebook will not appear in the
+        Open Sections.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Section" type="Section" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="isCurrentlyViewed" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          When any item is currently in viewed in the OneNote UI this property will be
+          set to true, otherwise it will not appear in the export XML.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="ID" type="ObjectID"/>
+  </xsd:complexType>
+
+  <!-- LiveSharedSections. -->
+  <xsd:complexType name="LiveSharedSections">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Live Shared Sections contains a copy of live sharing sections in which
+        the user participated.  Copies of sections for previous sessions will
+        be read-only, only live sharing sessions are editable.  These sections
+        do not exist on disk only in the OneNote offline cache so they don't have
+        a path parameter.
+
+        If there are no Live Shared Sections then this will not appear in the
+        export XML.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Section" type="Section" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="isCurrentlyViewed" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          When any item is currently in viewed in the OneNote UI this property will be
+          set to true, otherwise it will not appear in the export XML.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="ID" type="ObjectID"/>
+  </xsd:complexType>
+
+  <!-- Notebook. -->
+  <xsd:complexType name="Notebook">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        A notebook is the top-level container for sections and section groups.
+        Notebook contain sections, which are individual files, and section
+        groups, which are subfolders in a notebook.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Section" type="Section" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="SectionGroup" type="SectionGroup" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="nickname" type="xsd:string" >
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          The nickname for the notebook, viewable in the notebook properties
+          dialog.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="color" type="COLOR" default="automatic">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Color of the notebook as it appears on the navigation bar.  By default
+          the automatic color is chosen and OneNote will assign the color to the
+          notebook.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attributeGroup ref="HierarchyObjectAttributes"/>
+    <xsd:attributeGroup ref="FileObjectAttributes"/>
+  </xsd:complexType>
+
+  <!-- SectionGroup. -->
+  <xsd:complexType name="SectionGroup">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        A section group is a subfolder within a notebook, which will contain
+        individual section files or additional subfolders which are section groups.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Section" type="Section" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="SectionGroup" type="SectionGroup" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attributeGroup ref="HierarchyObjectAttributes"/>
+    <xsd:attributeGroup ref="FileObjectAttributes"/>
+  </xsd:complexType>
+
+  <!-- Section. -->
+  <xsd:complexType name="Section">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        A section is an individual file which contains pages.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Page" type="Page" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="color" type="COLOR" default="automatic">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Color of the section.  By default the automatic color is chosen
+          and OneNote will assign a color to the section.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="encrypted" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Sections can be password protected, if they are then the encrypted
+          attribute will be true. You cannot encrypt a section via the API,
+          you would need to do that from within OneNote.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="locked" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Password protected sections are locked until the user unlocks them.
+          If a section is unlocked then it may be accessible from the API.
+          Users can also specify that all password protected sections are locked
+          from the API, however this isn't the default option.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="readOnly" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Specifies if this section is read only.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="areAllPagesAvailable" type="xsd:boolean" default="true">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          When OneNote loads content from the source into the OneNote cache
+          it does so in the background.  When the section isn't fully loaded
+          this attribute will be false and once everything is loaded
+          it will be true.  This doesn't mean the content is fully in
+          sync with the mater copy, only that it has synced once.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attributeGroup ref="HierarchyObjectAttributes"/>
+    <xsd:attributeGroup ref="FileObjectAttributes"/>
+  </xsd:complexType>
+
+  <!-- Page. -->
+  <xsd:complexType name="Page">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        A page is the surface for all the user's content.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="TagDef" type="TagDef" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="MDIFile" type="MDIFile" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="Meta" type="Meta" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="MediaPlaylist" type="MediaPlaylist" minOccurs="0"/>
+      <xsd:element name="PageSettings" type="PageSettings" minOccurs="0"/>
+      <xsd:element name="Title" type="Title" minOccurs="0"/>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="Outline" type="Outline"/>
+        <xsd:element name="Image" type="Image"/>
+        <xsd:element name="InkDrawing" type="InkDrawing"/>
+        <xsd:element name="InsertedFile" type="InsertedFile"/>
+        <xsd:element name="MediaFile" type="MediaFile"/>
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute name="dateTime" type="xsd:dateTime">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          The timestamp for when the page was created.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="selected" type="Selection" default="none">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          If all or part of the page is selected this attribute will be set.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="isSubPage" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          If a page is a subpage then this attribute will be set to true.
+          Subpages and pages are identical in the API save for this
+          property.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="isIndexed" type="xsd:boolean" default="true">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          OneNote search uses Windows Desktop Search and OneNote sends pages to
+          the WDS indexer.  One of the parameters to the search method calls is
+          to include unindexed pages or not, if these parameters are set
+          then unindexed pages will be returned and this attribute will be
+          set on those unindexed pages.  Otherwise this attribute is omitted.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attributeGroup ref="HierarchyObjectAttributes"/>
+    <xsd:attributeGroup ref="CascadedTextAttributes"/>
+  </xsd:complexType>
+
+  <!-- Title. -->
+  <xsd:complexType name="Title">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        The title is the text or recognized text that appears in the
+        title area on the top of a page.  Only ink and text are valid data
+        types for the title area.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="OE" type="OE"/>
+    </xsd:sequence>
+    <xsd:attribute name="selected" type="Selection" default="none">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Selection information for the title.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attributeGroup ref="CascadedTextAttributes"/>
+  </xsd:complexType>
+
+  <!-- PageSettings. -->
+  <xsd:complexType name="PageSettings">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Page settings for the page.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="PageSize" type="PageSize" minOccurs="0"/>
+      <xsd:element name="RuleLines" type="RuleLines" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="RTL" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Specifies if the page layout is right-to-left or not.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="color" type="COLOR" default="automatic">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Specifies the background color for the page.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <!-- PageSize. -->
+  <xsd:complexType name="PageSize">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Settings for the page size.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="Automatic" type="Automatic">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">
+            When creating a new page you can omit this element and
+            OneNote will use the default automatic settings for the
+            page size based on the locale.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:sequence>
+        <xsd:element name="Orientation" type="PageOrientation"/>
+        <xsd:element name="Dimensions" type="PageDimensions"/>
+        <xsd:element name="Margins" type="PageMargins"/>
+      </xsd:sequence>
+    </xsd:choice>
+  </xsd:complexType>
+
+  <!-- PageOrientation. -->
+  <xsd:complexType name="PageOrientation">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Sets the page orientation, by default page orientation is set to portrait.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="landscape" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          The default orientation is portrait.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <!-- PageDimensions. -->
+  <xsd:complexType name="PageDimensions">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Defines the page dimensions.  All values are in points.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="height" type="PositiveDecimal" default="792"/>
+    <xsd:attribute name="width" type="PositiveDecimal" default="612"/>
+  </xsd:complexType>
+
+  <!-- PageMargins. -->
+  <xsd:complexType name="PageMargins">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Sets the page margins, by default the top and bottom are set to 36
+        and left and right are set to 72.  All values are in points.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="top" type="PositiveDecimal" default="36"/>
+    <xsd:attribute name="bottom" type="PositiveDecimal" default="36"/>
+    <xsd:attribute name="left" type="PositiveDecimal" default="72"/>
+    <xsd:attribute name="right" type="PositiveDecimal" default="72"/>
+  </xsd:complexType>
+
+  <!-- RuleLines. -->
+  <xsd:complexType name="RuleLines">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Settings for the rule lines on the page.  By default rule lines
+        appear on OneNote running on a Windows Tablet PC.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="Automatic" type="Automatic">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">
+            When creating new pages and you want to pick up the system
+            default for rule lines then set this to automatic.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:sequence>
+        <xsd:element name="Horizontal" type="RuleLineSettings" minOccurs="0"/>
+        <xsd:choice minOccurs="0">
+          <xsd:element name="Vertical" type="RuleLineSettings"/>
+          <xsd:element name="Margin" type="RuleMarginSettings"/>
+        </xsd:choice>
+      </xsd:sequence>
+    </xsd:choice>
+    <xsd:attribute name="visible" type="xsd:boolean" use="required">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          If you are specifying rule lines then you are required to set
+          this parameter and if you are showing rule lines this should
+          be set to true.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <!-- RuleLineSettings. -->
+  <xsd:complexType name="RuleLineSettings">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Settings for rule lines which include color and spacing.
+        RuleLineSettings are used for both vertical and horizontal rule lines.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="color" type="COLOR" default="automatic"/>
+    <xsd:attribute name="spacing" type="PositiveDecimal" default="23.76">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          There are various rule line options in OneNote, by default the
+          spacing is to 23.76 points.  You can look in OneNote to
+          see the different rule line spacing options.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <!-- RuleMarginSettings. -->
+  <xsd:complexType name="RuleMarginSettings">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Settings for margin lines which include color.  The rule margin
+        is the vertical line that goes along the margin and typically
+        is a blue color.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="color" type="COLOR" default="automatic"/>
+  </xsd:complexType>
+
+  <!-- PageObject. -->
+  <xsd:complexType name="PageObject">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        The base type for all page level object.  All PageObjects can have
+        metadata associated with them with the Meta element.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Position" type="Position" minOccurs="0"/>
+      <xsd:element name="Size" type="Size" minOccurs="0"/>
+      <xsd:element name="Meta" type="Meta" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="objectID" type="ObjectID">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          A unique ID given to each page level object, they are only
+          unique on a page but not throughout all pages.  New page
+          level objects should omit this attribute.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="selected" type="Selection" default="none">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Selection information for the PageObject.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="lastModifiedTime" type="xsd:dateTime">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Last modified time for the PageObject.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <!-- PageObjectTagable. -->
+  <xsd:complexType name="PageObjectTagable">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Extends the PageObject and defines which page level objects support
+        tags and media linking.  Media linking is the audio/video recording
+        feature found under the Insert menu.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="PageObject">
+        <xsd:sequence>
+          <xsd:element name="MediaIndex" type="MediaIndex" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Tag" type="Tag" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:sequence minOccurs="0" maxOccurs="1">
+            <xsd:element name="OutlookTask" type="OutlookTask" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="Tag" type="Tag" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <!-- InkDrawing. -->
+  <xsd:complexType name="InkDrawing">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Contains the ink serialized format (ISF) of an ink drawing.
+        When importing the data is either referenced in a file or
+        is included in line (Base64 encoded).  New ink imported into
+        OneNote can only be imported as an InkDrawing so that
+        OneNote can properly lay it out on the page.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="PageObjectTagable">
+        <xsd:sequence>
+          <xsd:element name="ShapeInfo" type="ShapeInfo" minOccurs="0"/>
+          <xsd:choice>
+            <xsd:element name="File" type="FilePath"/>
+            <xsd:element name="Data" type="xsd:base64Binary"/>
+            <xsd:element name="CallbackID" type="CallbackID"/>
+          </xsd:choice>
+        </xsd:sequence>
+        <xsd:attribute name="isUnclassified" type="xsd:boolean" default="false">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+              If the isUnclassifed attribute is set to true OneNote will run
+              ink analysis on the ink when the user navigates to the page,
+              this will allow the ink to be searchable in OneNote.  It may
+              also change the InkDrawing into an InkParagraph or InkWord.
+              When importing ink that you want converted to handwriting
+              set this attribute to true.
+              Note that hand writing recognition only occurs on machines
+              that have the Windows Tablet feature installed.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="inkOriginX" type="xsd:double" default="0">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+              inkOriginX is the offset of the ink within an ISF from the
+              position of the InkDrawing.  Typically inkOriginX are the
+              default value of 0 for ink drawings atleast for InkDrawings
+              created in OneNote.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="inkOriginY" type="xsd:double" default="0">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+              inkOriginY is the offset of the ink within an ISF from the
+              position of the InkDrawing.  Typically inkOriginY are the
+              default value of 0 for ink drawings atleast for InkDrawings
+              created in OneNote.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <!-- ShapeInfo. -->
+  <xsd:complexType name="ShapeInfo">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Shape information for InkDrawings which specifies their anchor point.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="AnchorPoint" type="AnchorPoint" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="isLine" type="xsd:boolean" default="false"/>
+  </xsd:complexType>
+
+  <!-- AnchorPoint. -->
+  <xsd:complexType name="AnchorPoint">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Anchor point for ShareInfo which contains the x, y position.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="x" type="xsd:double" use="required">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          The x position relative to the page origin.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="y" type="xsd:double" use="required">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          The y position relative to the page origin.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <!-- InsertedFile. -->
+  <xsd:complexType name="InsertedFile">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Definition of inserted files in OneNote.  For new files inserted into OneNote
+        you only need to specify the pathSource attribute.
+        When exporting a page with inserted files and you want to get that file use
+        the pathCache attribute to get the files from the OneNote offline cache.
+        The filename in the OneNote cache might be different from the preferred name
+        so make sure to supply that attribute otherwise OneNote will change the
+        filename on import.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="PageObjectTagable">
+        <xsd:attribute name="pathSource" type="xsd:string"/>
+        <xsd:attribute name="pathCache" type="xsd:string"/>
+        <xsd:attribute name="preferredName" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <!-- Image. -->
+  <xsd:complexType name="Image">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Definition of an images which can either be on a page or in an OE.
+        The data is either referenced in a file, is included in line as
+        Base64 encoded or referenced to a CallbackID.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="PageObjectTagable">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element name="File" type="FilePath"/>
+            <xsd:element name="Data" type="xsd:base64Binary"/>
+            <xsd:element name="CallbackID" type="CallbackID"/>
+          </xsd:choice>
+          <xsd:element name="OCRData" type="OCRData" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">
+                Images in OneNote may have OCRData which contain the OCR recognized
+                text that appears in the image or that was set via the API.
+              </xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="format" type="ImageFormat" default="auto"/>
+        <xsd:attribute name="mdiFileIndex" type="xsd:nonNegativeInteger">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+              Images sent to OneNote via the Send to OneNote 2007 print driver
+              will set the isPrintOut attribute to true and will also set the
+              mdiFileIndex, mdiPageNumber and originalPageNumber attrubutes,
+              when importing your own images you need not supply this.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="mdiPageNumber" type="xsd:nonNegativeInteger" default="0">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+              Images sent to OneNote via the Send to OneNote 2007 print driver
+              will set the isPrintOut attribute to true and will also set the
+              mdiFileIndex, mdiPageNumber and originalPageNumber attrubutes,
+              when importing your own images you need not supply this.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="originalPageNumber" type="xsd:nonNegativeInteger" default="0">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+              Images sent to OneNote via the Send to OneNote 2007 print driver
+              will set the isPrintOut attribute to true and will also set the
+              mdiFileIndex, mdiPageNumber and originalPageNumber attrubutes,
+              when importing your own images you need not supply this.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="isPrintOut" type="xsd:boolean" default="false">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+              Images sent to OneNote via the Send to OneNote 2007 print driver
+              will set the isPrintOut attribute to true and will also set the
+              mdiFileIndex, mdiPageNumber and originalPageNumber attrubutes,
+              when importing your own images you need not supply this.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="backgroundImage" type="xsd:boolean" default="false">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+              If the image is set to be a background image on the page this
+              attribute will be true.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <!-- OCRData. -->
+  <xsd:complexType name="OCRData">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Images in OneNote may contain image OCR information such as the text
+        that appears in the image.  Alternatively  OCRText can be set via the API.
+        Note that when OneNote performs OCR it may contain HTML information that
+        cannot be accessed by the XML and if you set the OCRText information via
+        the XML you cannot set the HTML information only plain text.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="OCRText" type="xsd:string"/>
+      <xsd:element name="OCRToken" type="OCRToken" minOccurs="1" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="lang" type="xsd:string" default="EN-US">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Specifies the language in ISO 639 format.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <!-- OCRToken. -->
+  <xsd:complexType name="OCRToken">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        When OneNote does image OCR OneNote will store where that OCR hit
+        occurred in the image.  This allows OneNote search to highlight the
+        text in the image so that users can easily find their search terms.
+        This information is stored in the OCRToken information.  It has
+        one token per word in the OCRText.
+        It contains all the information to highlight the text such as
+        the starting position, region, line, x, y, width and height.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="startPos" type="xsd:nonNegativeInteger" use="required"/>
+    <xsd:attribute name="region" type="xsd:nonNegativeInteger" default="0"/>
+    <xsd:attribute name="line" type="xsd:nonNegativeInteger" default="0"/>
+    <xsd:attribute name="x" type="PositiveDecimal" default="0"/>
+    <xsd:attribute name="y" type="PositiveDecimal" default="0"/>
+    <xsd:attribute name="width" type="PositiveDecimal" default="0"/>
+    <xsd:attribute name="height" type="PositiveDecimal" default="0"/>
+  </xsd:complexType>
+
+  <!-- Table. -->
+  <xsd:complexType name="Table">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Definition of a table which is stored in an OE.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Columns" type="Columns" minOccurs="0"/>
+      <xsd:element name="Row" type="Row" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="objectID" type="ObjectID"/>
+    <xsd:attribute name="bordersVisible" type="xsd:boolean" default="false"/>
+    <xsd:attribute name="selected" type="Selection" default="none">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Selection information for the table.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="lastModifiedTime" type="xsd:dateTime"/>
+    <xsd:attributeGroup ref="EditedByAttributes"/>
+    <xsd:attributeGroup ref="CascadedTextAttributes"/>
+  </xsd:complexType>
+
+  <!-- Columns. -->
+  <xsd:complexType name="Columns">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Contains the information about the columns in a table.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Column" type="Column" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Column. -->
+  <xsd:complexType name="Column">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Information about an individual column in a table, such as the index
+        location, width and if the width is locked or not.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="index" type="xsd:nonNegativeInteger" use="required"/>
+    <xsd:attribute name="width" type="PositiveDecimal" use="required"/>
+    <xsd:attribute name="isLocked" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          By default the widths of columns are unlocked and can be resized
+          as the user types content into a cell.  Once the user as sized
+          or resized a column width this attribute is set to true.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <!-- Row. -->
+  <xsd:complexType name="Row">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Contains the cells in an individual row in a table.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Cell" type="Cell" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="objectID" type="ObjectID"/>
+    <xsd:attribute name="selected" type="Selection" default="none"/>
+    <xsd:attribute name="lastModifiedTime" type="xsd:dateTime"/>
+    <xsd:attributeGroup ref="EditedByAttributes"/>
+    <xsd:attributeGroup ref="CascadedTextAttributes"/>
+  </xsd:complexType>
+
+  <!-- Cell. -->
+  <xsd:complexType name="Cell">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Contains the OEChildren in an individual cell.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="OEChildren" type="OEChildren" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="objectID" type="ObjectID"/>
+    <xsd:attribute name="selected" type="Selection" default="none"/>
+    <xsd:attribute name="lastModifiedTime" type="xsd:dateTime"/>
+    <xsd:attributeGroup ref="EditedByAttributes"/>
+    <xsd:attributeGroup ref="CascadedTextAttributes"/>
+  </xsd:complexType>
+
+  <!-- Outline. -->
+  <xsd:complexType name="Outline">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Definition of an outline on a page.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="PageObject">
+        <xsd:sequence>
+          <xsd:element name="Indents" type="Indents" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">
+                Lists the number of indents for this outline.
+              </xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="OEChildren" type="OEChildren" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attributeGroup ref="CascadedTextAttributes"/>
+        <xsd:attributeGroup ref="EditedByAttributes"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <!-- Indents. -->
+  <xsd:complexType name="Indents">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Defines the indents.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Indent" type="Indent" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Indent. -->
+  <xsd:complexType name="Indent">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Defines the indent level.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="level" type="xsd:nonNegativeInteger" use="required"/>
+    <xsd:attribute name="indent" type="PositiveDecimal" use="required"/>
+  </xsd:complexType>
+
+  <!-- OEChildren. -->
+  <xsd:complexType name="OEChildren">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        OEChildren are collections of outline elements (OE) which share the
+        same parent and indenting level.  OEChildren are in either an outline
+        or an outline element.  The default indent level is 1 for all OEChildern.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="ChildOELayout" type="ChildOELayout" minOccurs="0"/>
+      <xsd:choice maxOccurs="unbounded">
+        <xsd:element name="OE" type="OE"/>
+        <xsd:element name="HTMLBlock" type="HtmlContent"/>
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute name="indent" type="xsd:positiveInteger" default="1">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Default indent is 1.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="selected" type="Selection" default="none"/>
+    <xsd:attributeGroup ref="CascadedTextAttributes"/>
+  </xsd:complexType>
+
+  <!-- OE. -->
+  <xsd:complexType name="OE">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        A single outline element (OE) or a single line of text.
+        OEs contain most of the content on a page including images, tables,
+        all forms of ink, media files (audio/video), text and of course
+        additional levels of OEs in OEChildren.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="MediaIndex" type="MediaIndex" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="Tag" type="Tag" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:sequence minOccurs="0" maxOccurs="1">
+        <xsd:element name="OutlookTask" type="OutlookTask" minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="Tag" type="Tag" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:element name="Meta" type="Meta" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="List" type="List" minOccurs="0"/>
+      <xsd:choice>
+        <!-- One image, one table, inserted file, or a mix of Ink and Text pieces -->
+        <xsd:element name="Image" type="Image"/>
+        <xsd:element name="Table" type="Table"/>
+        <xsd:element name="InkDrawing" type="InkDrawing"/>
+        <xsd:element name="InsertedFile" type="InsertedFile"/>
+        <xsd:element name="MediaFile" type="MediaFile"/>
+        <xsd:element name="InkParagraph" type="InkParagraph"/>
+        <xsd:sequence maxOccurs="unbounded">
+          <xsd:element name="T" type="TextRange" minOccurs="0"/>
+          <xsd:element name="InkWord" type="InkWord" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:choice>
+      <xsd:element name="OEChildren" type="OEChildren" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="RTL" type="xsd:boolean">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Individual OEs can be right-to-left which may or may not be the same as
+          the page setting.  By default it set to the page RTL setting.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="bodyText" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          The bodyText is related to the outline features in OneNote, see
+          outlining toolbar for more info.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="collapsed" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          The collapsed is related to the outline features in OneNote, see
+          outlining toolbar for more info.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="collapsedBodyText" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          The collapsedBodyText is related to the outline features in OneNote, see
+          outlining toolbar for more info.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="alignment" type="Alignment" default="left"/>
+    <xsd:attribute name="selected" type="Selection" default="none"/>
+    <xsd:attribute name="objectID" type="ObjectID"/>
+    <xsd:attributeGroup ref="CascadedTextAttributes"/>
+    <xsd:attributeGroup ref="EditedByAttributes"/>
+    <xsd:attribute name="lastModifiedTime" type="xsd:dateTime"/>
+  </xsd:complexType>
+
+  <!-- ChildOELayout. -->
+  <xsd:complexType name="ChildOELayout">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Collection of layout settings for OEs.  All of these settings are
+        for the outline, how much spacing should there be, etc.  These
+        options can be found on under Format-->List.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="spaceBefore" type="PositiveDecimal"/>
+    <xsd:attribute name="spaceBetween" type="PositiveDecimal"/>
+    <xsd:attribute name="spaceAfter" type="PositiveDecimal"/>
+    <xsd:attribute name="listSpacing" type="PositiveDecimal"/>
+    <xsd:attribute name="listAlignment">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="left"/>
+          <xsd:enumeration value="right"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <!-- TextRange. -->
+  <xsd:complexType name="TextRange" >
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        The T type for all text in OEs.
+        TextRanges should be escaped by putting the information in CDATA blocks.
+        TextRanges can also contain HTML for formatting information and information
+        stored in spans.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="selected" type="Selection" default="none"/>
+        <xsd:attribute name="preserveWhiteSpace" type="xsd:boolean" default="true"/>
+        <xsd:attributeGroup ref="CascadedTextAttributes"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <!-- InkParagraph. -->
+  <xsd:complexType name="InkParagraph">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        InkParagraphs are collections of InkWords that are grouped together
+        but they cannot be parsed into individual InkWords.  This is usually
+        due to slanted handwriting which causes OneNote to group the text
+        together.
+        As with InkWords, InkParagraphs should not be created outside of OneNote
+        as it will most likely cause layout problems.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="InkWord" type="InkWord" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="x" type="xsd:double"/>
+    <xsd:attribute name="y" type="xsd:double"/>
+    <xsd:attribute name="width" type="PositiveDecimal"/>
+    <xsd:attribute name="height" type="PositiveDecimal"/>
+  </xsd:complexType>
+
+  <!-- InkWord. -->
+  <xsd:complexType name="InkWord">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        InkWords are the ink which is in an OE or InkParagraph and is typically
+        handwriting.  InkWords are an ISF of each individual word the user has
+        written and they are together either in an OE.  InkWords should
+        not be created or modified outside of OneNote and reimported.  This
+        will cause layout problems, only use InkDrawings to import new ink
+        into OneNote.
+        As with InkDrawings the data will be an in line base 64 ISF or a CallbackID.
+        Additionally you can have ink spacing and end of line elements.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="File" type="FilePath"/>
+      <xsd:element name="Data" type="xsd:base64Binary"/>
+      <xsd:element name="CallbackID" type="CallbackID"/>
+      <xsd:element name="Space" type="Space"/>
+      <xsd:element name="EndOfLine" type="EndOfLine"/>
+    </xsd:choice>
+    <xsd:attribute name="recognizedText" type="xsd:string">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          When OneNote is running on a machine with Windows Tablet features
+          the ink will be recognized for text.  The recognized text will be
+          in this attribute.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="selected" type="Selection" default="none"/>
+    <xsd:attribute name="x" type="xsd:double">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          X coordinate for the top of the ISF relative to the
+          PageObject (outline).
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="y" type="xsd:double">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Y coordinate for the left side of the ISF relative to the
+          PageObject (outline).
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="width" type="PositiveDecimal"/>
+    <xsd:attribute name="height" type="PositiveDecimal"/>
+    <xsd:attribute name="style" type="xsd:string"/>
+    <xsd:attribute name="inkOriginX" type="xsd:double" default="0">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          inkOriginX is the offset in the ISF for the ink blob.  When
+          rendering ink from OneNote take the ISF and use this inkOriginX
+          to start drawing the ink.  This inkOriginX is starting at the
+          top-left of the bounding box for the ISF.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="inkOriginY" type="xsd:double" default="0">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          inkOriginY is the offset in the ISF for the ink blob.  When
+          rendering ink from OneNote take the ISF and use this inkOriginY
+          to start drawing the ink.  This inkOriginY is starting at the
+          top-left of the bounding box for the ISF.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <!-- Space. -->
+  <xsd:complexType name="Space">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        A space for use with ink.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+
+  <!-- EndOfLine. -->
+  <xsd:complexType name="EndOfLine">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        End of line for use with ink.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+
+  <!-- List. -->
+  <xsd:complexType name="List">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        List information (either a bullet or a number).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="Bullet" type="Bullet"/>
+      <xsd:element name="Number" type="Number"/>
+    </xsd:choice>
+  </xsd:complexType>
+
+  <!-- Bullet. -->
+  <xsd:complexType name="Bullet">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Defines the bullet style with an integer.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="bullet" type="xsd:nonNegativeInteger" use="required">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          For the types of bullets found in OneNote open Format-->Bullets.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="fontSize" type="PositiveDecimal" default="10.0"/>
+    <xsd:attribute name="fontColor" type="COLOR" default="automatic"/>
+  </xsd:complexType>
+
+  <!-- Number. -->
+  <xsd:complexType name="Number">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Defines the number list format.  This includes the sequence, number
+        format, font information and text.
+        For the types of numbered lists found in OneNote open Format-->Numbering.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="numberSequence" type="xsd:nonNegativeInteger" use="required"/>
+    <xsd:attribute name="numberFormat" type="xsd:string" use="required"/>
+    <xsd:attribute name="restartNumberingAt" type="xsd:nonNegativeInteger"/>
+    <xsd:attribute name="font" type="xsd:string" default="Verdana"/>
+    <xsd:attribute name="fontSize" type="PositiveDecimal" default="10.0"/>
+    <xsd:attribute name="fontColor" type="COLOR" default="automatic"/>
+    <xsd:attribute name="bold" type="xsd:boolean" default="false"/>
+    <xsd:attribute name="italic" type="xsd:boolean" default="false"/>
+    <xsd:attribute name="language" type="xsd:string" default="1033"/>
+    <xsd:attribute name="text" type="xsd:string"/>
+  </xsd:complexType>
+
+  <!-- TagDef. -->
+  <xsd:complexType name="TagDef">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Defines the tags on the page.  This defines the index and name of the
+        tag that is used throughout the XML.
+
+        If the page contains any tags then the TagDef information must be
+        included on import or it will fail.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="index" type="xsd:nonNegativeInteger" use="required"/>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+    <xsd:attribute name="type" type="xsd:nonNegativeInteger" use="required">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          The type is 1 if the tag is a to-do tag that can be marked as completed
+          and 0 otherwise.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="symbol" type="xsd:nonNegativeInteger" use="required">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          The symbol is the offset in the tag gallery.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="fontColor" type="COLOR" default="automatic"/>
+    <xsd:attribute name="highlightColor" type="COLOR" default="none"/>
+  </xsd:complexType>
+
+  <!-- Tag. -->
+  <xsd:complexType name="Tag">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        A single instance of an applied tag, the index maps back to the TagDef definitions.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="index" type="xsd:nonNegativeInteger" use="required"/>
+    <xsd:attributeGroup ref="ActionItemAttributes"/>
+  </xsd:complexType>
+
+  <!-- OutlookTask. -->
+  <xsd:complexType name="OutlookTask">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        A single instance of an applied Outlook task.  It includes the GUID that
+        OneNote inserts into the task in Outlook and the task start and due dates.
+        There can only be one OutlookTask per OE.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attributeGroup ref="ActionItemAttributes"/>
+    <xsd:attribute name="startDate" type="xsd:dateTime"/>
+    <xsd:attribute name="dueDate" type="xsd:dateTime"/>
+    <xsd:attribute name="guidTask" type="GUID" use="required"/>
+  </xsd:complexType>
+
+  <!-- MediaFile. -->
+  <xsd:complexType name="MediaFile">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Definition of an media file in OneNote.  Media files in OneNote are the
+        audio or video recordings that allows the user to record something while
+        taking notes at the same time.  The notes will link to that point in the
+        audio so that the notes and media are in sync.
+        Media files are an extension to inserted files.  When importing you don't
+        need to supply a MediaRefernece GUID as OneNote will assign one accordingly.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="InsertedFile">
+        <xsd:sequence>
+          <xsd:element name="MediaReference" type="MediaReference" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">
+                A unique GUID on the page for this MediaRefernece.  When importing
+                new media content omit this and OneNote will assign a unique
+                GUID automatically.
+              </xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <!-- MediaPlaylist. -->
+  <xsd:complexType name="MediaPlaylist">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        A sorted list of media references on the page.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="MediaReference" type="MediaReference" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- MediaIndex. -->
+  <xsd:complexType name="MediaIndex">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        A single instance of an media timestamp.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="MediaReference" type="MediaReference"/>
+    </xsd:sequence>
+    <xsd:attribute name="timeIndex" type="xsd:nonNegativeInteger" use="required">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          timeIndex is in milliseconds since when the recording started.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <!-- MediaReference. -->
+  <xsd:complexType name="MediaReference">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        A reference to a media file as a GUID that OneNote creates.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="mediaID" type="GUID" use="required"/>
+  </xsd:complexType>
+
+  <!-- MDIFile. -->
+  <xsd:complexType name="MDIFile">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Defines a single Microsoft Document Imaging file.  Used by the Send to
+        OneNote 2007 print driver.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="File" type="FilePath"/>
+      <xsd:element name="Data" type="xsd:base64Binary"/>
+      <xsd:element name="CallbackID" type="CallbackID"/>
+    </xsd:choice>
+    <xsd:attribute name="mdiFileIndex" type="xsd:nonNegativeInteger" use="required"/>
+    <xsd:attribute name="idDocument" type="GUID"/>
+  </xsd:complexType>
+
+  <!-- Meta. -->
+  <xsd:complexType name="Meta">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Defines a single name/value data pair that can be applied to almost any
+        item on a page as well as hierarchy elements.
+        To delete a meta value reimport the existing name but leave the content
+        attribute blank which will delete that data.  The name will continue
+        to be on the page.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="name" type="MetaName" use="required"/>
+    <xsd:attribute name="content" type="MetaContent"/>
+  </xsd:complexType>
+
+  <!-- MetaName. -->
+  <xsd:simpleType name="MetaName">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        The name of a meta element, max length of 256 characters.
+        Note that if an individual word is longer than 64 characters it will not
+        be indexed Windows Desktop Search and the FindMeta method will not work.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="256"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- MetaContent. -->
+  <xsd:simpleType name="MetaContent">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        The content for a meta element, max length of 262144.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="262144"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+
+  <!-- Common types. -->
+
+  <!-- PositiveDecimal. -->
+  <xsd:simpleType name="PositiveDecimal">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Positive number.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:double">
+      <xsd:minInclusive value="0.00"/>
+      <xsd:maxInclusive value="1000000.00"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- HtmlContent. -->
+  <xsd:complexType name="HtmlContent">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        OneNote will not export HTMLBlocks, they are only used to import
+        HTML content into OneNote.  During import OneNote will parse the
+        HTML and convert into OneNote formats (tables, OEs, images, etc).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="File" type="FilePath"/>
+      <xsd:element name="Data" type="xsd:string"/>
+    </xsd:choice>
+  </xsd:complexType>
+
+  <!-- ObjectID. -->
+  <xsd:simpleType name="ObjectID">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        The representation of an object to be used for identification of
+        objects on a page.  Not unique through OneNote, but unique on the
+        page and the hierarchy.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="\{[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}\}\{[0-9]+\}\{[A-Z][0-9]+\}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- GUID. -->
+  <xsd:simpleType name="GUID">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Globally unique identifier.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="\{[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}\}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- FilePath. -->
+  <xsd:complexType name="FilePath">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Represents the path to a file.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="path" type="xsd:string" use="required"/>
+  </xsd:complexType>
+
+  <!-- COLOR. -->
+  <xsd:simpleType name="COLOR">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        The representation of a color - either the text string None or Automatic
+        or a # followed by a 6 digit hex value.  Color value is specified by
+        pairs of values in the order Red, Green, Blue.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="#[a-fA-F0-9]{6}|none|automatic"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- ImageFormat. -->
+  <xsd:simpleType name="ImageFormat">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Type of image being exported: auto, png, emf or jpg.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="auto|png|emf|jpg"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- Selection. -->
+  <xsd:simpleType name="Selection">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Representation of selection - three possible values:
+        none: No selection on this object or any of its children
+        partial: This object contains at least one selected object
+        all: This object is selected (or all its children are selected)
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="none|partial|all"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- Position. -->
+  <xsd:complexType name="Position">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Position of an object: x, y, z.
+        The z ordering starts at 1 and each page level item continues to have a higher number.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="x" type="xsd:double" use="required"/>
+    <xsd:attribute name="y" type="xsd:double" use="required"/>
+    <xsd:attribute name="z" type="xsd:nonNegativeInteger">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Each new item on a page has a higher z-order than the previous item.  The greater
+          the z-order the higher it appears on the page.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <!-- Size. -->
+  <xsd:complexType name="Size">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Size of an object.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="width" type="PositiveDecimal" use="required"/>
+    <xsd:attribute name="height" type="PositiveDecimal" use="required"/>
+  </xsd:complexType>
+
+  <!-- CallbackID. -->
+  <xsd:complexType name="CallbackID">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Used when not fully exporting all of the binary data out of OneNote.
+        When reimporting XML which doesn't contain all of the binary data
+        you need to omit the CallbackIDs in certain cases otherwise OneNote
+        will fail to import.  Any elements that are direct children of the
+        page will work just fine if a CallbackID is specified on reimport.
+        Any elements that are descendents of an outline will cause an error
+        to be thrown if a CallbackID is specified.  To resolve that get the
+        full page information from GetPageContent.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="callbackID" type="ObjectID" use="required"/>
+  </xsd:complexType>
+
+  <!-- Automatic. -->
+  <xsd:complexType name="Automatic">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        The automatic setting.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:complexType>
+
+  <!-- CascadedTextAttributes. -->
+  <xsd:attributeGroup name="CascadedTextAttributes">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Each of these properties apply to a T/TextRange element or to anything
+        which may have a T/TextRange as a child.  The attribute used
+        for a given T/TextRange element will be the last attribute seen before
+        (or on) the element.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="style" type="xsd:string"/>
+    <xsd:attribute name="lang" type="xsd:string">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Language is in ISO 639 format.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:attributeGroup>
+
+  <!-- EditedByAttributes -->
+  <xsd:attributeGroup name="EditedByAttributes">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Defines the properties which specify who edited what when.  If not set
+        on a child element, it has the same setting as the parent.  The author
+        information is not displayed in the right-click context menu.
+
+        All times are in GMT.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="author" type="xsd:string"/>
+    <xsd:attribute name="lastModifiedBy" type="xsd:string"/>
+    <xsd:attribute name="creationTime" type="xsd:dateTime"/>
+  </xsd:attributeGroup>
+
+  <!-- HierarchyObjectAttributes. -->
+  <xsd:attributeGroup name="HierarchyObjectAttributes">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Default attributes for all hierarchy items: ID, name, lastModifiedTime
+        and isCurrentlyViewed.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="ID" type="ObjectID"/>
+    <xsd:attribute name="name" type="xsd:string"/>
+    <xsd:attribute name="lastModifiedTime" type="xsd:dateTime"/>
+    <xsd:attribute name="isCurrentlyViewed" type="xsd:boolean" default="false">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          isCurrentlyViewed will be set to true for each item currently viewed
+          by the user.  When viewing a page there will be a currently viewed
+          notebook, section and page.  There will be no currently viewed page
+          if OneNote is only running with the API and without a window frame.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:attributeGroup>
+
+  <!-- FileObjectAttributes. -->
+  <xsd:attributeGroup name="FileObjectAttributes">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Defines the file object attributes.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="path" type="xsd:string"/>
+  </xsd:attributeGroup>
+
+  <!-- ActionItemAttributes. -->
+  <xsd:attributeGroup name="ActionItemAttributes">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Attributes that are common to action items (tags and Outlook tasks).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="completed" type="xsd:boolean" default="false"/>
+    <xsd:attribute name="disabled" type="xsd:boolean" default="false"/>
+    <xsd:attribute name="creationDate" type="xsd:dateTime"/>
+    <xsd:attribute name="completionDate" type="xsd:dateTime"/>
+  </xsd:attributeGroup>
+
+  <!-- Alignment. -->
+  <xsd:simpleType name="Alignment">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+        Defines the alignments: left, center and right.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="left|center|right"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+</xsd:schema>

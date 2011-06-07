@@ -139,7 +139,6 @@
     <Compile Include="ONReader\PageNodes\TagDef.cs" />
     <Compile Include="ONReader\PageScanner.cs" />
     <Compile Include="ONReader\PageScannerContext.cs" />
-    <Compile Include="ONReader\PropertySubNodes.cs" />
     <Compile Include="ONReader\Tools\PageAttributeTools.cs" />
     <Compile Include="ONReader\Tools\SelectionTools.cs" />
     <Compile Include="ONWriter\ONPageContentUpdater.cs" />
@@ -179,6 +178,9 @@
     <Content Include="Resources\ribbon.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Resources\XMLSchema1.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DebugWin.resx">

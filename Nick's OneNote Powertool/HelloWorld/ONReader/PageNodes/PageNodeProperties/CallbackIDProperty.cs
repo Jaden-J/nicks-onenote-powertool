@@ -12,7 +12,7 @@ namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
         {
             get
             {
-                return Attributes.GetAttributeValueString("callbackID");
+                return Attributes.GetAttributeValue("callbackID");
             }
         }
     }

@@ -24,7 +24,7 @@ namespace NicksPowerTool.ONReader.PageNodes
         {
             get
             {
-                return Attributes.GetAttributeValueString("ID");
+                return Attributes.GetAttributeValue("ID");
             }
         }
 
