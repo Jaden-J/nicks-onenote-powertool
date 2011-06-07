@@ -45,12 +45,14 @@ namespace NicksPowerTool.ONWriter
                 else if (CurrentNode.NextSibling != null)
                 {
                     CurrentNode = CurrentNode.NextSibling;
+                    Elevated = false;
                 }
                 else
                 {
                     CurrentNode = CurrentNode.ParentNode;
+                    Elevated = true;
                 }
-            } while (CurrentNode != RootNode && !Elevated);
+            } while (CurrentNode != RootNode || !Elevated);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
 {
     [NodeName("Tag")]
-    class TagProperty : PageProperty
+    public class TagProperty : PageProperty
     {
     }
 }

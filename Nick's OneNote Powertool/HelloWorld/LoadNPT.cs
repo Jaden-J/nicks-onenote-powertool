@@ -41,7 +41,8 @@ namespace NicksPowerTool
 			/*
 				For debugging, it is useful to have a MessageBox.Show() here, so that execution is paused while you have a chance to get VS to 'Attach to Process' 
 			*/
-			//if (debugging) MessageBox.Show("Starting the plugin");
+            //if (debugging) MessageBox.Show("Starting the plugin");
+            ONAppTools.App = (ApplicationClass)Application;
 			onApp = (ApplicationClass)Application;
 		}
 		public void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref System.Array custom)

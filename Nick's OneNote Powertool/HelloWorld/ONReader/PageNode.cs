@@ -126,7 +126,7 @@ namespace NicksPowerTool.ONReader
         public PageNode(PageNode parent) : base()
         {
             XmlDocument doc = parent.Node.OwnerDocument;
-            XmlElement e = doc.CreateElement(NodeName);
+            XmlElement e = doc.CreateElement(parent.Node.Prefix, NodeName, parent.Node.NamespaceURI);
 
             Node = e;
             parent.AddChildNode(this, true);

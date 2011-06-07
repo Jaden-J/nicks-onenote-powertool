@@ -51,7 +51,7 @@ namespace NicksPowerTool.ONReader.PageNodeAugmentation
                 String data = n.GetBinaryDataString();
 
                 DataProperty dp = new DataProperty(pn);
-                dp.Node.Value = data;
+                dp.Node.InnerXml = data;
 
                 pn.RemoveChildNode(cip);
 
@@ -118,6 +118,17 @@ namespace NicksPowerTool.ONReader.PageNodeAugmentation
             double height = node.Attributes.GetAttributeValueDouble("height");
 
             return new Rect(x, y, width, height);
+        }
+        #endregion
+
+        #region Tagable
+        public static List<TagProperty> GetTags(this Tagable inode)
+        {
+
+        }
+
+        public static bool AddTag(this Tagable inode, TagProperty tagToAdd) {
+        
         }
         #endregion
     }

@@ -20,6 +20,7 @@ using NicksPowerTool.ONReader.PageNodes.PageNodeProperties;
 using NicksPowerTool.ONReader;
 using System.Xml;
 using NicksPowerTool.ONReader.PageNodeAugmentation;
+using NicksPowerTool.ONWriter;
 
 
 using System.Drawing.Imaging;
@@ -195,7 +196,7 @@ namespace NicksPowerTool
                     }
                 }
             };
-
+            
             scanner.scan();
 
             foreach (ISFPageNode isf in nodes)
@@ -210,11 +211,12 @@ namespace NicksPowerTool
             if (result == DialogResult.Yes)
             {
                 DebugWin.ShowDebugStringWindow(scanner.RawXml);
+
+                ONXmlWriter.FillInBinary(scanner.Page);
+
                 StringBuilder sb = new StringBuilder();
                 XmlWriterSettings settings = new XmlWriterSettings();
-                settings.NewLineHandling = NewLineHandling.Replace;
-                settings.NewLineChars = "";
-                settings.Indent = false;
+                settings.Indent = true;
                 settings.CloseOutput = true;
                 settings.Encoding = System.Text.Encoding.Default;
                 scanner.Page.Node.OwnerDocument.Save(XmlWriter.Create(sb, settings));

@@ -10,9 +10,8 @@ namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
     [NodeName("Data")]
     class DataProperty : PageProperty, ICanConstruct
     {
-        public DataProperty(PageNode parent) : base()
+        public DataProperty(PageNode parent) : base(parent)
         {
-            XmlElement e = parent.Node.OwnerDocument.CreateElement("Data");
         }
     }
 }
