@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Xml;
 using System.Reflection;
 using NicksPowerTool.ONReader.PageNodes;
+using NicksPowerTool.ONReader.PageNodes.PageNodeProperties;
 using System.Collections;
 
 namespace NicksPowerTool.ONReader
@@ -126,9 +127,17 @@ namespace NicksPowerTool.ONReader
         public PageNode(PageNode parent) : base()
         {
             XmlDocument doc = parent.Node.OwnerDocument;
-            XmlElement e = doc.CreateElement(parent.Node.Prefix, NodeName, parent.Node.NamespaceURI);
+            XmlNode n;
+            if (this is CDataProperty)
+            {
+                n = doc.CreateCDataSection("");
+            }
+            else
+            {
+                n = doc.CreateElement(parent.Node.Prefix, NodeName, parent.Node.NamespaceURI);
+            }
 
-            Node = e;
+            Node = n;
             parent.AddChildNode(this, true);
             //YOU SHOULD MAKE ATTRIBUTES FOR THIS FOR AUTOMATIC DEFAULT CONSTRUCTION
         }

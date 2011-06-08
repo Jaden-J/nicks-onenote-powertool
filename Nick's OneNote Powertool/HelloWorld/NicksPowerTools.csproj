@@ -78,6 +78,7 @@
     <Compile Include="ONReader\PageNodeAugmentation\IHasRelativeArea.cs" />
     <Compile Include="ONReader\PageNodeAugmentation\IHasSize.cs" />
     <Compile Include="ONReader\PageNodeAugmentation\ICanConstruct.cs" />
+    <Compile Include="ONReader\PageNodeAugmentation\IHasCData.cs" />
     <Compile Include="ONReader\PageNodeAugmentation\Tagable.cs" />
     <Compile Include="ONReader\PageNodeFactory.cs" />
     <Compile Include="ONReader\PageNodeParts\ONNodeAttributeSet.cs" />
