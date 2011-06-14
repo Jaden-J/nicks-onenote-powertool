@@ -17,6 +17,7 @@ namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
         public CDataProperty(IHasCData pn)
             : base((PageNode)pn)
         {
+            
         }
     }
 }

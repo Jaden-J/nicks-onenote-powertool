@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using NicksPowerTool.ONReader;
+using System.Xml.Serialization;
 
 namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
 {
@@ -44,7 +45,15 @@ namespace NicksPowerTool.ONReader.PageNodes.PageNodeProperties
 
         public DateTime CompletionDate
         {
+            get
+            {
+                return XmlConvert.ToDateTime(Attributes.GetAttributeValue("completionDate")).ToUniversalTime().ToString(;
+            }
 
+            set
+            {
+                XmlConvert.
+            }
         }
 
         public TagProperty(PageNode parentNode)

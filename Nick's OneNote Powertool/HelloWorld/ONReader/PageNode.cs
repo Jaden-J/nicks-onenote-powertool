@@ -165,6 +165,15 @@ namespace NicksPowerTool.ONReader
             _PageNodes.Remove(node);
         }
 
+        public void RemoveChildNodesOfType<T>() where T : PageNode
+        {
+            List<T> ns = GetChildNodes<T>();
+            foreach (T n in ns)
+            {
+                RemoveChildNode(n);
+            }
+        }
+
         public PageNode GetChildNode(String localName)
         {
             foreach (PageNode n in ChildPageNodes)

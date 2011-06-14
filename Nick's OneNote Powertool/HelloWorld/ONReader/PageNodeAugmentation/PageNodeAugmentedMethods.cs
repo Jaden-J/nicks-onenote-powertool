@@ -132,8 +132,8 @@ namespace NicksPowerTool.ONReader.PageNodeAugmentation
         }
         #endregion
 
-        #region IHasCData
-        public static string GetText(this IHasCData inode) //combine all the text regardless 
+        #region IHasText
+        public static string GetText(this IHasText inode) //combine all the text regardless 
             // of whether you've got selection stuff going on
             // Might also want to reselect if any of it was selected
         {
@@ -150,7 +150,7 @@ namespace NicksPowerTool.ONReader.PageNodeAugmentation
             {
                 foreach (TProperty t in tNodes)
                 {
-                    sb.Append(t.GetText());
+                    sb.Append(t.GetCDataValue());
                 }
             }
             return sb.ToString();
@@ -159,6 +159,31 @@ namespace NicksPowerTool.ONReader.PageNodeAugmentation
         public static void SetText(this IHasCData inode, String text)
         {
 
+        }
+        #endregion
+
+        #region IHasCData
+        public static string GetCDataValue(this IHasCData inode)
+        {
+            CDataProperty cd = ((PageNode)inode).GetChildNode<CDataProperty>();
+            if (cd == null)
+            {
+                return "";
+            }
+            else
+            {
+                return cd.Node.Value;
+            }
+        }
+
+        public static void SetCDataValue(this IHasCData inode, string val)
+        {
+            CDataProperty cd = ((PageNode)inode).GetChildNode<CDataProperty>();
+            if (cd == null)
+            {
+                cd = new CDataProperty(inode);
+            }
+            cd.Node.Value = val;
         }
         #endregion
     }

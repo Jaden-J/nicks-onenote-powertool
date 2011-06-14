@@ -51,5 +51,15 @@ namespace NicksPowerTool
             dialog.Title = "Please select a page: ";
             dialog.TreeDepth = HierarchyElement.hePages;
         }
+
+        public static DateTime ConvertStringToDateTime(string s)
+        {
+            //"2011-05-18T12:33:50.000Z"
+        }
+
+        public string ConvertDateTimeToString(DateTime dt)
+        {
+
+        }
     }
 }
